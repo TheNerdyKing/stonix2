@@ -11,36 +11,36 @@ gsap.registerPlugin(ScrollTrigger);
 
 const goals = [
   {
-    text: "ייצור לידים",
+    text: "Lead Generation",
     icon: Users,
     metric: "50K+",
-    sub: "לידים איכותיים",
-    color: "from-blue-500 to-cyan-400",
-    shadow: "shadow-cyan-500/20"
+    sub: "High-Quality Leads",
+    color: "from-orange-500 to-amber-400",
+    shadow: "shadow-orange-500/20"
   },
   {
-    text: "החזר השקעה",
+    text: "Active ROAS",
     icon: Target,
-    metric: "+147%",
-    sub: "החזר ממוצע על הוצאות",
+    metric: "4.8x",
+    sub: "Average Return on Ad Spend",
     color: "from-orange-400 to-orange-600",
     shadow: "shadow-orange-500/20"
   },
   {
-    text: "יחס המרה",
+    text: "Conversion Rate",
     icon: TrendingUp,
     metric: "3.2x",
-    sub: "גידול ביחס ההמרה",
-    color: "from-emerald-400 to-emerald-600",
-    shadow: "shadow-emerald-500/20"
+    sub: "Lift in Conversion Rate",
+    color: "from-orange-600 to-red-500",
+    shadow: "shadow-orange-500/20"
   },
   {
-    text: "צמיחה מהירה",
+    text: "Rapid Scaling",
     icon: Zap,
     metric: "2x",
-    sub: "מסלול צמיחה מהיר יותר",
-    color: "from-purple-400 to-purple-600",
-    shadow: "shadow-purple-500/20"
+    sub: "Faster Growth Trajectory",
+    color: "from-amber-400 to-orange-500",
+    shadow: "shadow-amber-500/20"
   },
 ];
 
@@ -94,10 +94,10 @@ export default function GoalStack() {
 
         <div className="mb-24 md:mb-32 max-w-3xl">
           <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
-            מי <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">אנחנו?</span>
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Impact.</span>
           </h2>
           <p className="text-lg md:text-xl text-white/40 leading-relaxed font-light">
-            ב-STONIX, אנחנו מתמחים בבניית אסטרטגיות שיווקיות שמייצרות תוצאות אמיתיות לעסקים. יותר לידים, יותר לקוחות, יותר הכנסות – דרך עבודה מדויקת, חכמה, ומבוססת נתונים.
+            At STONIX, we engineer marketing strategies that yield measurable outcomes. More leads, more customers, and more revenue—achieved through precise, data-driven execution.
           </p>
         </div>
 
@@ -134,7 +134,7 @@ export default function GoalStack() {
                   {/* RIGHT: Metric Card */}
                   <div className="metric-card md:mr-auto">
                     <div className="bg-[#111] border border-white/5 rounded-2xl px-6 py-4 flex flex-col justify-center min-w-[160px]">
-                      <span className="text-xs text-white/30 uppercase tracking-widest font-mono mb-1">השפעה</span>
+                      <span className="text-xs text-white/30 uppercase tracking-widest font-mono mb-1">IMPACT</span>
                       <span className={`text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br ${goal.color}`}>
                         {goal.metric}
                       </span>
