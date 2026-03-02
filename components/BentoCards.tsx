@@ -66,9 +66,9 @@ export default function BentoCards() {
                 <div className="w-10 h-10 bg-orange-500/20 rounded-xl flex items-center justify-center">
                   <Target className="w-5 h-5 text-orange-500" />
                 </div>
-                <span className="text-white/40 text-sm">הקמפיין המוביל</span>
+                <span className="text-white/40 text-sm">Top Campaign</span>
               </div>
-              <p className="text-white text-2xl font-bold">₪300K הכנסות</p>
+              <p className="text-white text-2xl font-bold">$82K Revenue</p>
               <div className="flex gap-1 mt-2">
                 <div className="w-6 h-1.5 bg-orange-500 rounded-full" />
                 <div className="w-6 h-1.5 bg-orange-500/50 rounded-full" />
@@ -78,7 +78,7 @@ export default function BentoCards() {
 
             <div className="float-element bg-white/5 rounded-2xl p-4 border border-white/10 ml-8">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-white/40 text-sm">החזר השקעה מרבי</span>
+                <span className="text-white/40 text-sm">Peak ROAS</span>
                 <TrendingUp className="w-4 h-4 text-orange-400" />
               </div>
               <p className="text-white text-3xl font-bold">4.8x</p>
@@ -86,7 +86,7 @@ export default function BentoCards() {
 
             <div className="float-element bg-white/5 rounded-2xl p-4 border border-white/10">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-white/40 text-sm">ביצועים</span>
+                <span className="text-white/40 text-sm">Performance</span>
                 <span className="text-orange-400 text-sm">+24%</span>
               </div>
               <div className="h-16 flex items-end gap-1">
@@ -103,7 +103,7 @@ export default function BentoCards() {
 
           <div className="relative z-10 mt-8">
             <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-              תנו לתוצאות <br /> לדבר בעד עצמן
+              Let the Results <br /> Speak for Themselves
             </h3>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function BentoCards() {
 
           <div className="relative z-10 mt-8">
             <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-              הגיעו ליעדים <br /> בשיא המהירות
+              Reach Your Goals <br /> at Maximum Velocity
             </h3>
           </div>
         </div>

@@ -10,9 +10,9 @@ import { Flame, TrendingUp, Zap, Calendar, Clock, User, ArrowRight } from "lucid
 gsap.registerPlugin(ScrollTrigger);
 
 const benefits = [
-  { text: "קמפיינים מדויקים וחכמים", icon: Flame },
-  { text: "מעקב ביצועים בזמן אמת", icon: TrendingUp },
-  { text: "ליווי אישי ושקוף לאורך הדרך", icon: Zap },
+  { text: "Precision-targeted, data-driven campaigns", icon: Flame },
+  { text: "Real-time performance tracking & reporting", icon: TrendingUp },
+  { text: "Transparent, dedicated account management", icon: Zap },
 ];
 
 export default function FinalCTA() {
@@ -109,13 +109,13 @@ export default function FinalCTA() {
           {/* LEFT SIDE TEXT */}
           <div ref={contentRef} className="flex flex-col">
             <div className="cta-element inline-flex items-center gap-2 px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full text-orange-500 text-xs font-bold tracking-widest uppercase mb-8 w-fit">
-              <Zap className="w-3 h-3" /> דברו איתנו
+              <Zap className="w-3 h-3" /> Let's Talk
             </div>
 
             <h2 className="cta-element text-5xl md:text-7xl font-black text-white mb-8 leading-[1] tracking-tighter">
-              מוכנים <br />
+              Ready to <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
-                לשבור שיאים?
+                Break Records?
               </span>
             </h2>
 
@@ -135,8 +135,8 @@ export default function FinalCTA() {
 
             <div className="cta-element">
               <button onClick={() => window.open('https://wa.me/972552664456', '_blank')} className="flex items-center gap-3 px-8 py-5 bg-orange-500 hover:bg-orange-400 text-black rounded-full text-lg font-bold transition-all shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:shadow-[0_0_40px_rgba(249,115,22,0.5)] hover:scale-105 active:scale-95">
-                <span>שלחו הודעה בוואטסאפ</span>
-                <ArrowRight className="w-5 h-5 rotate-180" />
+                <span>Book a Strategy Call</span>
+                <ArrowRight className="w-5 h-5" />
               </button>
             </div>
           </div>
@@ -169,18 +169,18 @@ export default function FinalCTA() {
                     <User className="w-8 h-8 text-black" />
                   </div>
                   <div>
-                    <h4 className="text-white font-bold text-lg">ייעוץ אישי</h4>
-                    <p className="text-white/40 text-sm">שיחת אפיון ללא עלות</p>
+                    <h4 className="text-white font-bold text-lg">Strategy Session</h4>
+                    <p className="text-white/40 text-sm">Free discovery call. No commitment.</p>
                   </div>
                 </div>
 
                 {/* Inputs Mock */}
                 <div className="space-y-4">
                   <div className="h-14 w-full bg-[#1A1A1A] rounded-2xl border border-white/5 px-5 flex items-center group-hover:border-orange-500/30 transition-colors">
-                    <span className="text-white/20 text-sm">כתובת אימייל...</span>
+                    <span className="text-white/20 text-sm">Email address...</span>
                   </div>
                   <div className="h-14 w-full bg-[#1A1A1A] rounded-2xl border border-white/5 px-5 flex items-center group-hover:border-orange-500/30 transition-colors">
-                    <span className="text-white/20 text-sm">כתובת אתר...</span>
+                    <span className="text-white/20 text-sm">Company website...</span>
                   </div>
                 </div>
 
@@ -188,7 +188,7 @@ export default function FinalCTA() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="h-24 bg-orange-500/5 rounded-2xl border border-orange-500/20 p-4 flex flex-col justify-center items-center gap-2">
                     <Calendar className="w-5 h-5 text-orange-500" />
-                    <span className="text-white font-bold text-sm">מחר</span>
+                    <span className="text-white font-bold text-sm">Tomorrow</span>
                   </div>
                   <div className="h-24 bg-white/[0.02] rounded-2xl border border-white/5 p-4 flex flex-col justify-center items-center gap-2">
                     <Clock className="w-5 h-5 text-white/40" />
@@ -197,7 +197,7 @@ export default function FinalCTA() {
                 </div>
 
                 <div onClick={() => window.open('https://wa.me/972552664456', '_blank')} className="mt-4 h-14 w-full bg-orange-500 hover:bg-orange-400 rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.2)] flex items-center justify-center cursor-pointer transition-colors">
-                  <span className="text-black font-bold">לתיאום שיחה</span>
+                  <span className="text-black font-bold">Book a Call</span>
                 </div>
               </div>
 

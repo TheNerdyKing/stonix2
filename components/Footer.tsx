@@ -11,19 +11,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 const footerLinks = {
   services: [
-    { label: "ניהול רשתות חברתיות", href: "#services" },
-    { label: "קידום ממומן במטא", href: "#services" },
-    { label: "קידום ממומן בגוגל", href: "#services" },
-    { label: "חבילת שיווק מלאה", href: "#services" },
+    { label: "Social Media Management", href: "#services" },
+    { label: "Meta Paid Ads", href: "#services" },
+    { label: "Google Paid Ads", href: "#services" },
+    { label: "Full Marketing Bundle", href: "#services" },
   ],
   company: [
-    { label: "המלצות", href: "#recommendations" },
-    { label: "מי אנחנו", href: "#about" },
-    { label: "צור קשר", href: "#contact" },
+    { label: "Testimonials", href: "#recommendations" },
+    { label: "About Us", href: "#about" },
+    { label: "Contact", href: "#contact" },
   ],
   legal: [
-    { label: "מדיניות פרטיות", href: "#" },
-    { label: "תנאי שימוש", href: "#" },
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Use", href: "#" },
   ],
 };
 
@@ -66,12 +66,12 @@ export default function Footer() {
             <div className="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(249,115,22,0.3)]">
               <span className="text-black font-bold text-lg">SX</span>
             </div>
-            <span className="text-white text-xl font-bold italic tracking-tight">הזמן שלך לצמוח.</span>
+            <span className="text-white text-xl font-bold italic tracking-tight">Time to Grow.</span>
           </div>
 
           <div className="flex items-center gap-4">
             <button onClick={() => window.open('https://wa.me/972552664456', '_blank')} className="px-8 py-4 bg-orange-500 text-black rounded-full font-bold hover:bg-orange-400 transition-all text-sm cursor-pointer">
-              לייעוץ מקצועי
+              Book a Consultation
             </button>
           </div>
         </div>
@@ -85,14 +85,14 @@ export default function Footer() {
               <span className="text-white font-bold tracking-tight">STONIX</span>
             </div>
             <div className="text-white/40 text-sm leading-relaxed max-w-[200px] flex flex-col gap-2">
-              <p dir="rtl">שדרות ההסתדרות 236, חיפה</p>
-              <p dir="ltr" className="text-right">055-2664456</p>
-              <p dir="ltr" className="text-right">a.s.mediagroup2023@gmail.com</p>
+              <p>236 HaHistadrut Blvd, Haifa</p>
+              <p className="">+972-55-2664456</p>
+              <p className="">a.s.mediagroup2023@gmail.com</p>
             </div>
           </div>
 
           <div>
-            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-6">שירותים</h4>
+            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-6">Services</h4>
             <ul className="space-y-4">
               {footerLinks.services.map((link) => (
                 <li key={link.label}>
@@ -124,7 +124,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-6">משפטי</h4>
+            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-6">Legal</h4>
             <ul className="space-y-4 mb-8">
               {footerLinks.legal.map((link) => (
                 <li key={link.label}>
@@ -154,11 +154,11 @@ export default function Footer() {
 
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/20 text-[10px] uppercase font-bold tracking-[0.2em]">
-            ©2025 STONIX. כל הזכויות שמורות.
+            ©2025 STONIX. All Rights Reserved.
           </p>
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            <p className="text-white/20 text-[10px] uppercase font-bold tracking-[0.2em]">מערכות מאובטחות</p>
+            <p className="text-white/20 text-[10px] uppercase font-bold tracking-[0.2em]">Systems Secured</p>
           </div>
         </div>
       </div>

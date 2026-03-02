@@ -67,33 +67,33 @@ export default function ChooseChannel() {
         <div className="flex flex-col md:flex-row items-end justify-between gap-12 mb-20">
           <div className="max-w-2xl">
             <p className="text-orange-500 text-xs font-bold uppercase tracking-[0.3em] mb-6">
-              שירותים והתמחויות
+              Services &amp; Specializations
             </p>
             <h2
               ref={headlineRef}
               className="text-5xl md:text-8xl font-bold text-white tracking-tighter leading-[0.9]"
             >
-              מעטפת <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">שיווקית מלאה.</span>
+              Full-Stack <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Marketing.</span>
             </h2>
           </div>
           <p className="text-white/30 text-lg md:text-xl font-light max-w-sm italic">
-            כל מה שצריך כדי לבנות מותג מנצח ולהשיג יותר לקוחות.
+            Everything you need to build a winning brand and acquire more customers.
           </p>
         </div>
 
         <div ref={cardsRef} className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {[
-            { title: "ניהול רשתות חברתיות", desc: "ניהול שוטף ומקצועי של הנכסים הדיגיטליים שלכם.", icon: Users },
-            { title: "קידום ממומן במטא", desc: "קמפיינים מדויקים בפייסבוק ואינסטגרם.", icon: Target },
-            { title: "קידום ממומן בגוגל", desc: "לכידת עניין של גולשים שמחפשים אתכם.", icon: Search },
-            { title: "בינה מלאכותית", desc: "שילוב כלי AI לייעול התהליכים והקריאייטיב.", icon: Zap },
-            { title: "סטודיו לצילום", desc: "צילומי תדמית ומוצר ברמה הגבוהה ביותר.", icon: Camera },
-            { title: "צילומי חוץ", desc: "הפקות צילום מרשימות בלוקיישנים נבחרים.", icon: Image },
-            { title: "עריכת וידאו", desc: "סרטונים שמושכים את העין וממירים גולשים.", icon: Video },
-            { title: "קופירייטינג", desc: "כתיבה שיווקית שמשכנעת לקוחות לפעול.", icon: PenTool },
-            { title: "ייעוץ אסטרטגי", desc: "ליווי צמוד של העסק לפריצה קדימה.", icon: LineChart },
-            { title: "חבילת שיווק מלאה", desc: "פתרון מקיף לכל ערוצי השיווק תחת קורת גג אחת.", icon: Package },
+            { title: "Social Media Management", desc: "Consistent, professional management of your digital channels.", icon: Users },
+            { title: "Meta Paid Ads", desc: "Precision campaigns on Facebook and Instagram.", icon: Target },
+            { title: "Google Paid Ads", desc: "Capture intent-driven searches from people looking for you.", icon: Search },
+            { title: "AI Integration", desc: "Leverage AI tooling to streamline processes and creative workflows.", icon: Zap },
+            { title: "Photo Studio", desc: "Brand and product photography at the highest standard.", icon: Camera },
+            { title: "On-Location Shoots", desc: "Impressive photo productions in hand-picked locations.", icon: Image },
+            { title: "Video Editing", desc: "Videos that stop the scroll and convert viewers.", icon: Video },
+            { title: "Copywriting", desc: "Persuasive marketing copy that moves customers to act.", icon: PenTool },
+            { title: "Strategic Consulting", desc: "Hands-on advisory to break through your next growth ceiling.", icon: LineChart },
+            { title: "Full Marketing Bundle", desc: "A complete, end-to-end solution across all marketing channels.", icon: Package },
           ].map((item, i) => (
             <div
               key={i}

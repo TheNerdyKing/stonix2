@@ -74,7 +74,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         onClick={handleSkip}
         className="absolute bottom-10 px-6 py-2 text-white/50 hover:text-white transition-colors text-sm underline underline-offset-4"
       >
-        דלג
+        Skip
       </button>
     </div>
   );

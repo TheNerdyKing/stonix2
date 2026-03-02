@@ -11,21 +11,21 @@ gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
     {
-        name: "ירון לוי",
-        company: "מנכ״ל בחברת תוכנה",
-        text: "העבודה מול STONIX הוכיחה לנו שאפשר לקבל תוצאות אמיתיות בלי סיסמאות ריקות. כמות הלידים קפצה משמעותית והאיכות גבוהה במיוחד.",
+        name: "Yaron L.",
+        company: "CEO, Software Company",
+        text: "Working with STONIX proved that you can get real results without empty promises. Lead volume jumped significantly and the quality has been outstanding.",
         highlighted: false,
     },
     {
-        name: "דנה כהן",
-        company: "בעלים של קליניקה",
-        text: "חיפשנו מישהו שייקח אחריות מלאה על השיווק שלנו. המחזור שלנו הוכפל תוך 3 חודשים בזכות הקמפיינים המדויקים וליווי האסטרטגי שלהם.",
+        name: "Dana K.",
+        company: "Clinic Owner",
+        text: "We were looking for someone to take full ownership of our marketing. Our revenue doubled in 3 months thanks to their precision campaigns and strategic guidance.",
         highlighted: true,
     },
     {
-        name: "עמית ברקוביץ'",
-        company: "סמנכ״ל שיווק",
-        text: "מגוון השירותים תחת קורת גג אחת מאפשר לנו לרוץ מהר. הם מבינים את השוק, קוראים את הנתונים ומספקים יציבות מדהימה לצמיחה שלנו.",
+        name: "Amit B.",
+        company: "VP of Marketing",
+        text: "Having all services under one roof lets us move fast. They understand the market, read the data, and deliver remarkable stability for our growth.",
         highlighted: false,
     },
 ];
@@ -70,13 +70,13 @@ export default function Testimonials() {
 
             <div className="max-w-7xl mx-auto text-center mb-16 relative z-10">
                 <p className="text-orange-500 font-bold uppercase tracking-[0.25em] text-xs mb-4">
-                    לקוחות ממליצים
+                    Client Success Stories
                 </p>
                 <h2 className="text-4xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-                    החוויה <span className="text-orange-500">שלכם.</span>
+                    The Results <span className="text-orange-500">Speak.</span>
                 </h2>
                 <p className="text-white/40 text-lg max-w-2xl mx-auto font-light">
-                    אל תקחו רק את המילה שלנו. תראו מה הלקוחות שלנו אומרים אחרי שעבדו איתנו.
+                    Don't take our word for it. See what our clients say after working with us.
                 </p>
             </div>
 
@@ -88,8 +88,8 @@ export default function Testimonials() {
                     <div
                         key={testi.name}
                         className={`testimonial-card relative rounded-[3rem] p-10 flex flex-col justify-between border transition-all duration-500 ${testi.highlighted
-                                ? "bg-[#0A0A0A] border-orange-500/30 shadow-[0_30px_60px_rgba(249,115,22,0.1)] scale-105 z-20"
-                                : "bg-white/[0.02] border-white/5 hover:border-white/10"
+                            ? "bg-[#0A0A0A] border-orange-500/30 shadow-[0_30px_60px_rgba(249,115,22,0.1)] scale-105 z-20"
+                            : "bg-white/[0.02] border-white/5 hover:border-white/10"
                             } ${hoveredIndex === index ? "-translate-y-3" : ""}`}
                         onMouseEnter={() => setHoveredIndex(index)}
                         onMouseLeave={() => setHoveredIndex(null)}
