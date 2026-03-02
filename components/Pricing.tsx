@@ -1,158 +1,181 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { prefersReducedMotion } from "@/lib/gsap";
-import { Check, Sparkles } from "lucide-react";
+import { CheckCircle, ArrowLeft, Zap } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
-const plans = [
+const PLANS = [
   {
     name: "Starter",
-    price: "$2,500",
-    period: "/month",
-    description: "Perfect for startups testing paid acquisition",
-    features: [
-      "2 ad platforms",
-      "$10K monthly ad spend",
-      "Weekly reporting",
-      "Basic creative support",
+    nameHe: "סטארטר",
+    desc: "לעסקים שמתחילים וצריכים בסיס חזק",
+    price: "₪3,500",
+    period: "/ חודש",
+    perks: [
+      "ניהול קמפיינים בפלטפורמה אחת",
+      "עד ₪20K תקציב מדיה",
+      "דו\"ח חודשי",
+      "תמיכה בוואטסאפ",
     ],
-    highlighted: false,
+    cta: "התחייבות מינימלית",
+    isPopular: false,
+    color: "#F59E0B",
   },
   {
     name: "Growth",
-    price: "$5,000",
-    period: "/month",
-    description: "For brands ready to scale profitably",
-    features: [
-      "4 ad platforms",
-      "$50K monthly ad spend",
-      "Real-time dashboard",
-      "Full creative suite",
-      "A/B testing & CRO",
-      "Dedicated strategist",
+    nameHe: "צמיחה",
+    desc: "לעסקים שצומחים ורוצים לשחק בליג אחר",
+    price: "₪7,500",
+    period: "/ חודש",
+    perks: [
+      "ניהול מלא – Meta + Google",
+      "עד ₪60K תקציב מדיה",
+      "CRO בסיסי + A/B Testing",
+      "קריאייטיב – 8 קמפיינים",
+      "דיווח שבועי + BI Dashboard",
+      "מנהל חשבון ייעודי",
     ],
-    highlighted: true,
+    cta: "הכי פופולרי",
+    isPopular: true,
+    color: "#F97316",
   },
   {
     name: "Scale",
-    price: "$10,000",
-    period: "/month",
-    description: "Enterprise growth with full-funnel coverage",
-    features: [
-      "Unlimited platforms",
-      "$200K+ monthly ad spend",
-      "Custom integrations",
-      "In-house creative team",
-      "Advanced attribution",
-      "24/7 support",
+    nameHe: "סקייל",
+    desc: "לחברות שמוכנות לדחוף הכל עד הסוף",
+    price: "מחיר מותאם",
+    period: "",
+    perks: [
+      "אסטרטגיית שיווק מלאה",
+      "תקציב ללא הגבלה",
+      "CRO מתקדם + Funnel מלא",
+      "קריאייטיב בלתי מוגבל",
+      "דיווח יומי + Slack channel",
+      "ליווי אסטרטגי C-level",
     ],
-    highlighted: false,
+    cta: "נדבר על עסקה",
+    isPopular: false,
+    color: "#A78BFA",
   },
 ];
 
 export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (prefersReducedMotion()) return;
 
-    const cards = cardsRef.current?.querySelectorAll(".pricing-card");
-    if (!cards) return;
-
-    gsap.fromTo(
-      cards,
-      { y: 60, opacity: 0 },
+    gsap.fromTo(titleRef.current?.children || [],
+      { opacity: 0, y: 30 },
       {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none reverse",
-        },
+        opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+        scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
       }
     );
 
+    const cards = sectionRef.current?.querySelectorAll(".plan-card");
+    cards?.forEach((card, i) => {
+      gsap.fromTo(card,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: "expo.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+          delay: i * 0.1,
+        }
+      );
+    });
   }, { scope: sectionRef });
 
   return (
-    <section
-      ref={sectionRef}
-      id="pricing"
-      className="relative min-h-screen bg-[#050505] py-24 px-4 md:px-8 overflow-hidden"
-    >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500/10 to-transparent" />
+    <section ref={sectionRef} id="pricing" className="section-pad" style={{ background: "#05060A", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+      <div className="max-w-7xl mx-auto">
 
-      <div className="max-w-7xl mx-auto text-center mb-16 relative z-10">
-        <h2 className="text-4xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-          Unlock all <span className="text-orange-500">benefits</span>
-        </h2>
-        <p className="text-white/40 text-lg max-w-2xl mx-auto font-light">
-          Transparent pricing that scales with your growth. No hidden fees, just results.
-        </p>
-      </div>
+        <div ref={titleRef} className="text-right mb-16 flex flex-col items-end">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: "#F97316" }}>
+            תמחור ושקיפות
+          </p>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white">
+            בחרו את המסלול
+          </h2>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter ember-text">
+            שמתאים לכם.
+          </h2>
+          <p className="mt-6 text-lg max-w-xl text-right leading-relaxed" style={{ color: "#94A3B8" }}>
+            ללא הסתרה, ללא מחירים מפתיעים. רק ערך ברור לכל שקל.
+          </p>
+        </div>
 
-      <div
-        ref={cardsRef}
-        className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6 md:gap-8 relative z-10"
-      >
-        {plans.map((plan, index) => (
-          <div
-            key={plan.name}
-            className={`pricing-card relative rounded-[3rem] p-10 border transition-all duration-500 ${plan.highlighted
-              ? "bg-[#0A0A0A] border-orange-500/30 shadow-[0_30px_60px_rgba(249,115,22,0.1)] scale-105 z-20"
-              : "bg-white/[0.02] border-white/5 hover:border-white/10"
-              } ${hoveredIndex === index ? "-translate-y-3" : ""}`}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            {plan.highlighted && (
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-orange-500 rounded-full flex items-center gap-2 shadow-lg">
-                <Sparkles className="w-4 h-4 text-black" />
-                <span className="text-black text-xs font-bold uppercase tracking-widest">Most Popular</span>
+        <div className="grid md:grid-cols-3 gap-6 items-start">
+          {PLANS.map((p) => (
+            <div key={p.name} className="plan-card rounded-[2rem] p-8 flex flex-col relative overflow-hidden"
+              style={{
+                background: p.isPopular ? "#0E1118" : "rgba(14,17,24,0.5)",
+                border: p.isPopular ? `1px solid rgba(249,115,22,0.4)` : "1px solid rgba(255,255,255,0.06)",
+                boxShadow: p.isPopular ? "0 0 80px rgba(249,115,22,0.1)" : "none",
+              }}>
+
+              {p.isPopular && (
+                <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, #F97316, transparent)" }} />
+              )}
+
+              {p.isPopular && (
+                <div className="flex items-center justify-end mb-4">
+                  <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold"
+                    style={{ background: "rgba(249,115,22,0.1)", color: "#F97316", border: "1px solid rgba(249,115,22,0.25)" }}>
+                    <Zap className="w-3 h-3" />
+                    הכי פופולרי
+                  </span>
+                </div>
+              )}
+
+              <div className="text-right mb-6">
+                <div className="text-xs uppercase tracking-widest mb-1" style={{ color: p.color }}>{p.name}</div>
+                <h3 className="text-2xl font-black text-white mb-2">{p.nameHe}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{p.desc}</p>
               </div>
-            )}
 
-            <h3 className="text-white/50 text-sm font-bold uppercase tracking-widest mb-6">{plan.name}</h3>
+              <div className="flex items-baseline justify-end gap-1 mb-8">
+                <span className="text-base" style={{ color: "#94A3B8" }}>{p.period}</span>
+                <span className="text-4xl font-black text-white">{p.price}</span>
+              </div>
 
-            <div className="flex items-baseline gap-1 mb-6">
-              <span className="text-white text-5xl font-bold tabular-nums">{plan.price}</span>
-              <span className="text-white/30 text-sm font-medium">{plan.period}</span>
+              <ul className="flex flex-col gap-3 mb-8 flex-1">
+                {p.perks.map((perk) => (
+                  <li key={perk} className="flex items-center justify-end gap-2.5">
+                    <span className="text-sm text-right" style={{ color: "#94A3B8" }}>{perk}</span>
+                    <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: p.color }} />
+                  </li>
+                ))}
+              </ul>
+
+              <a href="#contact" className="w-full">
+                <button className="w-full py-3.5 rounded-xl font-bold text-sm transition-all"
+                  style={p.isPopular ? {
+                    background: "#F97316",
+                    color: "#000",
+                    boxShadow: "0 0 30px rgba(249,115,22,0.3)",
+                  } : {
+                    background: "rgba(255,255,255,0.05)",
+                    color: "#F8FAFC",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                  }}
+                  onMouseEnter={e => !p.isPopular && ((e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)")}
+                  onMouseLeave={e => !p.isPopular && ((e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)")}
+                >
+                  {p.cta}
+                </button>
+              </a>
             </div>
-
-            <p className="text-white/40 text-sm mb-10 min-h-[40px] leading-relaxed italic">"{plan.description}"</p>
-
-            <ul className="space-y-4 mb-10">
-              {plan.features.map((feature, i) => (
-                <li key={i} className="flex items-center gap-4">
-                  <div className="w-5 h-5 rounded-full bg-orange-500/10 flex items-center justify-center flex-shrink-0 border border-orange-500/20">
-                    <Check className="w-3 h-3 text-orange-500" />
-                  </div>
-                  <span className="text-white/70 text-sm font-medium">{feature}</span>
-                </li>
-              ))}
-            </ul>
-
-            <button
-              className={`w-full py-5 rounded-full font-bold transition-all duration-300 relative overflow-hidden group ${plan.highlighted
-                ? "bg-orange-500 text-black hover:bg-orange-400 shadow-xl"
-                : "bg-white/5 text-white hover:bg-white/10 border border-white/10"
-                }`}
-            >
-              <span className="relative z-10">Get Started</span>
-            </button>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

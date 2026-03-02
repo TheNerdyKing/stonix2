@@ -1,121 +1,123 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { prefersReducedMotion } from "@/lib/gsap";
-import { Star, Quote, Building2 } from "lucide-react";
+import { Star, Quote } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
-const testimonials = [
+const TESTIMONIALS = [
     {
-        name: "Yaron L.",
-        company: "CEO, Software Company",
-        text: "Working with STONIX proved that you can get real results without empty promises. Lead volume jumped significantly and the quality has been outstanding.",
-        highlighted: false,
+        name: "ירון ל.",
+        role: "מנכ\"ל, חברת תוכנה",
+        text: "STONIX הפכו את השיווק שלנו מהוצאה לנכס. כמות הלידים הוכפלה תוך 45 יום והאיכות גבוהה בצורה שלא ראינו קודם. הם לא מוכרים הבטחות – הם מוכרים תוצאות.",
+        highlight: false,
+        rating: 5,
     },
     {
-        name: "Dana K.",
-        company: "Clinic Owner",
-        text: "We were looking for someone to take full ownership of our marketing. Our revenue doubled in 3 months thanks to their precision campaigns and strategic guidance.",
-        highlighted: true,
+        name: "דנה כ.",
+        role: "בעלת קליניקה, חיפה",
+        text: "חיפשתי מישהו שייקח בעלות מלאה על השיווק. תוך 3 חודשים המחזור שלנו הוכפל. הם ניתחו, בנו, בדקו – ורק אז ביצעו. זה שינה הכל.",
+        highlight: true,
+        rating: 5,
     },
     {
-        name: "Amit B.",
-        company: "VP of Marketing",
-        text: "Having all services under one roof lets us move fast. They understand the market, read the data, and deliver remarkable stability for our growth.",
-        highlighted: false,
+        name: "עמית ב.",
+        role: "סמנכ\"ל שיווק, SaaS",
+        text: "עבדנו עם סוכנויות רבות לפני STONIX. הם הראשונים שדיברו איתנו על מטריקות שבאמת חשובות – ROAS, LTV, CAC. לא סתם impressions.",
+        highlight: false,
+        rating: 5,
     },
 ];
 
 export default function Testimonials() {
     const sectionRef = useRef<HTMLElement>(null);
+    const titleRef = useRef<HTMLDivElement>(null);
     const cardsRef = useRef<HTMLDivElement>(null);
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     useGSAP(() => {
         if (prefersReducedMotion()) return;
 
-        const cards = cardsRef.current?.querySelectorAll(".testimonial-card");
-        if (!cards) return;
-
-        gsap.fromTo(
-            cards,
-            { y: 60, opacity: 0 },
+        gsap.fromTo(titleRef.current?.children || [],
+            { opacity: 0, y: 30 },
             {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top 70%",
-                    toggleActions: "play none none reverse",
-                },
+                opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+                scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
             }
         );
 
+        const cards = cardsRef.current?.querySelectorAll(".testi-card");
+        cards?.forEach((card, i) => {
+            gsap.fromTo(card,
+                { opacity: 0, y: 40, scale: 0.97 },
+                {
+                    opacity: 1, y: 0, scale: 1, duration: 0.65, ease: "expo.out",
+                    scrollTrigger: { trigger: cardsRef.current, start: "top 85%" },
+                    delay: i * 0.12,
+                }
+            );
+        });
     }, { scope: sectionRef });
 
     return (
-        <section
-            ref={sectionRef}
-            id="recommendations"
-            className="relative min-h-screen bg-[#050505] py-24 px-4 md:px-8 overflow-hidden"
-        >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500/10 to-transparent" />
+        <section ref={sectionRef} id="testimonials" className="section-pad" style={{ background: "#05060A", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+            <div className="max-w-7xl mx-auto">
 
-            <div className="max-w-7xl mx-auto text-center mb-16 relative z-10">
-                <p className="text-orange-500 font-bold uppercase tracking-[0.25em] text-xs mb-4">
-                    Client Success Stories
-                </p>
-                <h2 className="text-4xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-                    The Results <span className="text-orange-500">Speak.</span>
-                </h2>
-                <p className="text-white/40 text-lg max-w-2xl mx-auto font-light">
-                    Don't take our word for it. See what our clients say after working with us.
-                </p>
-            </div>
+                <div ref={titleRef} className="text-right mb-16 flex flex-col items-end">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: "#F97316" }}>
+                        לקוחות ממליצים
+                    </p>
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white">
+                        הם אמרו את זה,
+                    </h2>
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter ember-text">
+                        לא אנחנו.
+                    </h2>
+                </div>
 
-            <div
-                ref={cardsRef}
-                className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6 md:gap-8 relative z-10"
-            >
-                {testimonials.map((testi, index) => (
-                    <div
-                        key={testi.name}
-                        className={`testimonial-card relative rounded-[3rem] p-10 flex flex-col justify-between border transition-all duration-500 ${testi.highlighted
-                            ? "bg-[#0A0A0A] border-orange-500/30 shadow-[0_30px_60px_rgba(249,115,22,0.1)] scale-105 z-20"
-                            : "bg-white/[0.02] border-white/5 hover:border-white/10"
-                            } ${hoveredIndex === index ? "-translate-y-3" : ""}`}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                        <div className="flex items-center gap-1 mb-8">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <Star key={star} className="w-5 h-5 fill-orange-500 text-orange-500" />
-                            ))}
-                        </div>
+                <div ref={cardsRef} className="grid md:grid-cols-3 gap-6">
+                    {TESTIMONIALS.map((t, i) => (
+                        <div key={i} className="testi-card rounded-[2rem] p-8 flex flex-col justify-between transition-all duration-300"
+                            style={{
+                                background: t.highlight ? "#0E1118" : "rgba(14,17,24,0.6)",
+                                border: t.highlight ? "1px solid rgba(249,115,22,0.3)" : "1px solid rgba(255,255,255,0.06)",
+                                boxShadow: t.highlight ? "0 0 60px rgba(249,115,22,0.08)" : "none",
+                                transform: t.highlight ? "scale(1.02)" : "scale(1)",
+                            }}>
 
-                        <p className="text-white/80 text-lg leading-relaxed mb-10 flex-1 relative">
-                            <Quote className="absolute -top-4 -right-4 w-12 h-12 text-white/5 rotate-180" />
-                            "{testi.text}"
-                        </p>
+                            <div>
+                                <div className="flex items-center gap-1 mb-6">
+                                    {Array(t.rating).fill(0).map((_, j) => (
+                                        <Star key={j} className="w-4 h-4 fill-current" style={{ color: "#F97316" }} />
+                                    ))}
+                                </div>
 
-                        <div className="flex items-center gap-4 mt-auto">
-                            <div className="w-12 h-12 rounded-full bg-white/5 flex flex-shrink-0 items-center justify-center border border-white/10">
-                                <Building2 className="w-5 h-5 text-white/40" />
+                                <div className="relative mb-6">
+                                    <Quote className="absolute -top-3 -right-3 w-10 h-10 opacity-5 rotate-180" />
+                                    <p className="text-base leading-relaxed text-right" style={{ color: "#94A3B8" }}>
+                                        &ldquo;{t.text}&rdquo;
+                                    </p>
+                                </div>
                             </div>
-                            <div className="text-right">
-                                <h4 className="text-white font-bold">{testi.name}</h4>
-                                <p className="text-white/40 text-sm">{testi.company}</p>
+
+                            <div className="flex items-center justify-end gap-3 pt-6 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                                <div className="text-right">
+                                    <div className="font-bold text-white">{t.name}</div>
+                                    <div className="text-sm" style={{ color: "#475569" }}>{t.role}</div>
+                                </div>
+                                <div className="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm"
+                                    style={{ background: "rgba(249,115,22,0.15)", color: "#F97316" }}>
+                                    {t.name[0]}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </section>
     );

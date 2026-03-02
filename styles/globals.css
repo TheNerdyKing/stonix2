@@ -2,11 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== STONIX EMBER NIGHT DESIGN SYSTEM ===== */
 :root {
-  --background: #05060A;
-  --foreground: #F8FAFC;
-  --ember-gradient: linear-gradient(135deg, #F97316 0%, #F59E0B 100%);
-  --ring-gradient: conic-gradient(from 0deg, #F97316, #F59E0B, #A78BFA, #F97316);
+  --bg: #05060A;
+  --surface: #0E1118;
+  --surface-2: #12151F;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-glow: rgba(249, 115, 22, 0.25);
+  --orange: #F97316;
+  --amber: #F59E0B;
+  --violet: #A78BFA;
+  --text: #F8FAFC;
+  --muted: #94A3B8;
+  --muted-2: #475569;
 }
 
 * {
@@ -16,138 +24,136 @@
 }
 
 html {
-  scroll-behavior: auto;
-}
-
-html.lenis, html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Custom scrollbar */
+/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #05060A;
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #0E1118;
-  border-radius: 4px;
+  background: var(--surface-2);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1A1F2D;
+  background: rgba(249, 115, 22, 0.3);
 }
 
-/* Gradient text utility */
-.gradient-text {
-  background: linear-gradient(135deg, #F97316 0%, #F59E0B 50%, #A78BFA 100%);
+/* ===== UTILITY CLASSES ===== */
+.ember-text {
+  background: linear-gradient(135deg, #F97316 0%, #F59E0B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Ember gradient background */
-.ember-gradient-bg {
-  background: linear-gradient(135deg, #F97316 0%, #F59E0B 100%);
+.ember-text-violet {
+  background: linear-gradient(135deg, #F97316 0%, #A78BFA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Ring gradient stroke */
-.ring-gradient-stroke {
-  stroke: url(#ringGradient);
+.glow-card {
+  position: relative;
 }
 
-/* Glow effects */
-.glow-orange {
-  box-shadow: 0 0 40px rgba(249, 115, 22, 0.4);
+.glow-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.3), transparent 50%, rgba(245, 158, 11, 0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
-.glow-amber {
-  box-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: var(--orange);
+  color: #000;
+  border-radius: 9999px;
+  font-weight: 800;
+  font-size: 1rem;
+  transition: all 0.2s;
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.35);
+  cursor: pointer;
+  border: none;
 }
 
-/* Card hover lift */
-.card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.btn-primary:hover {
+  background: #fb923c;
+  transform: scale(1.03);
+  box-shadow: 0 0 50px rgba(249, 115, 22, 0.5);
 }
 
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+.btn-primary:active {
+  transform: scale(0.98);
 }
 
-/* Pill button styles */
-.pill-button {
-  @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.pill-button-primary {
-  @apply pill-button bg-white text-black hover:bg-gray-100;
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(249, 115, 22, 0.3);
 }
 
-.pill-button-outline {
-  @apply pill-button border border-white/30 text-white hover:bg-white/10;
+/* ===== SECTION SPACING ===== */
+.section-pad {
+  padding: 6rem 1.5rem;
 }
 
-/* Reduced motion */
+@media (min-width: 768px) {
+  .section-pad {
+    padding: 8rem 3rem;
+  }
+}
+
+/* ===== PIN SPACER FIX ===== */
+.pin-spacer {
+  overflow: visible !important;
+}
+
+/* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
-}
-
-/* Pin spacer fix for GSAP */
-.pin-spacer {
-  overflow: visible !important;
-}
-
-/* Hide Kimi Agent and other potential injected widgets */
-#kimi-agent, 
-.kimi-agent, 
-[id*="kimi"], 
-[class*="kimi"],
-#agent-buddy,
-.agent-buddy,
-iframe[src*="kimi"] {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  z-index: -1 !important;
-}
-
-/* Transform GPU acceleration */
-.gpu-accelerate {
-  transform: translateZ(0);
-  will-change: transform;
 }
