@@ -1,25 +1,121 @@
-export const dictionaries = {
+interface DictItem {
+    nav: { services: string; results: string; testimonials: string; contact: string; call: string };
+    hero: {
+        pulse: string;
+        title1: string;
+        title2: string;
+        subtitle: string;
+        ctaPrimary: string;
+        ctaSecondary: string;
+        badges: string[];
+        stats: { val: string; label: string }[];
+        dashboard: {
+            domain: string;
+            kpi1: string;
+            kpi2: string;
+            kpi3: string;
+            chartTitle: string;
+            chartGrowth: string;
+            activityTitle: string;
+            act1: string;
+            act1val: string;
+            act1time: string;
+            act2: string;
+            act2val: string;
+            act2time: string;
+        };
+        clientsLabel: string;
+    };
+    about: { subtitle: string; title1: string; title2: string; p1: string; p2: string; p3: string; p4: string };
+    services: {
+        preTitle: string;
+        title1: string;
+        title2: string;
+        desc: string;
+        cta: string;
+        list: { id: string; title: string; subtitle: string; desc: string; perks: string[]; mockMetric: string }[];
+    };
+    testimonials: { preTitle: string; title1: string; title2: string; reviews: { name: string; role: string; text: string }[] };
+    pricing: {
+        preTitle: string;
+        title1: string;
+        title2: string;
+        subtitle: string;
+        popularLabel: string;
+        plans: { name: string; nameDisplay: string; desc: string; price: string; period: string; cta: string; perks: string[] }[];
+    };
+    methodology: {
+        preTitle: string;
+        title1: string;
+        title2: string;
+        desc: string;
+        steps: { num: string; title: string; desc: string }[];
+    };
+    results: {
+        preTitle: string;
+        title1: string;
+        title2: string;
+        desc: string;
+        btn: string;
+        challengeLabel: string;
+        resultLabel: string;
+        cases: { industry: string; client: string; challenge: string; result: string; metrics: { label: string; val: string; bad?: boolean }[] }[];
+    };
+    bento: {
+        left: { title1: string; title2: string; campaignSlot: string; revenue: string; roas: string; performance: string };
+        right: { title1: string; title2: string; roasLabel: string };
+    };
+    finalCTA: {
+        preTitle: string;
+        title1: string;
+        title2: string;
+        cta: string;
+        benefits: string[];
+        mock: { title: string; subtitle: string; email: string; website: string; tomorrow: string; time: string };
+    };
+    contact: {
+        preTitle: string;
+        title1: string;
+        title2: string;
+        addressTitle: string;
+        addressValue: string;
+        phoneTitle: string;
+        phoneValue: string;
+        emailTitle: string;
+        emailValue: string;
+        formName: string;
+        formPhone: string;
+        formBusiness: string;
+        formEmail: string;
+        formSubmit: string;
+        agreed: string;
+        successText: string;
+    };
+    footer: { rights: string; privacy: string; terms: string };
+}
+
+export const dictionaries: Record<"he" | "en", DictItem> = {
     he: {
         nav: { services: "שירותים", results: "תוצאות", testimonials: "המלצות", contact: "יצירת קשר", call: "שיחת אסטרטגיה חינם" },
         hero: {
             pulse: "שיווק ביצועים מהדור הבא",
             title1: "תוצאות.",
             title2: "לא רק שיווק.",
-            subtitle: "אנחנו דואגים לכל מה שקשור לפרסום - כדי שלך יהיה שקט. עם מטרה אחת ברורה: להביא לך יותר לקוחות.",
+            subtitle: "אנחנו יוצרים מנועי צמיחה דיגיטליים שעובדים בשבילך – עם אסטרטגיות מבוססות נתונים, קריאייטיב מדויק וניהול קמפיינים שמביא תוצאות.",
             ctaPrimary: "שיחת אסטרטגיה חינם",
             ctaSecondary: "ראו תוצאות",
-            badges: ["ניסיון של 5+ שנים", "100+ לקוחות", "ללא התחייבות"],
+            badges: ["ניסיון של 5+ שנים", "2,200+ לידים בקמפיין", "ללא התחייבות"],
             stats: [
+                { val: "2,209", label: "לידים בפייסבוק" },
+                { val: "₪24.85", label: "עלות ממוצעת לליד" },
+                { val: "118", label: "הוספות לסל בקורס" },
                 { val: "4.8x", label: "ROAS ממוצע" },
-                { val: "50K+", label: "לידים איכותיים" },
-                { val: "-42%", label: "עלות לליד" },
-                { val: "3x", label: "שיפור בהמרות" },
             ],
             dashboard: {
-                domain: "dashboard.stonix.co.il",
-                kpi1: "ROAS החודש",
+                domain: "app.stonix.agency",
+                kpi1: "ROAS ממוצע",
                 kpi2: "עלות לליד",
-                kpi3: "המרות",
+                kpi3: "לידים חדשים",
                 chartTitle: "הכנסות חודשיות",
                 chartGrowth: "+147% YoY",
                 activityTitle: "פעילות אחרונה",
@@ -88,19 +184,19 @@ export const dictionaries = {
             title2: "לא אנחנו.",
             reviews: [
                 {
-                    name: "ירון ל.",
-                    role: "מנכ\"ל, חברת תוכנה",
-                    text: "STONIX הפכו את השיווק שלנו מהוצאה לנכס. כמות הלידים הוכפלה תוך 45 יום והאיכות גבוהה בצורה שלא ראינו קודם. הם לא מוכרים הבטחות – הם מוכרים תוצאות."
+                    name: "שירן א.",
+                    role: "מנכ\"לית, מותג אופנה",
+                    text: "לינואר, היית נפלאה! את פשוט קרן שמש שעברה אצלנו. השירות, האנרגיה והתוצאות בקמפיינים היו מעבר לכל ציפייה. תודה על הליווי הצמוד והתוצאות המדהימות."
                 },
                 {
-                    name: "דנה כ.",
-                    role: "בעלת קליניקה, חיפה",
-                    text: "חיפשתי מישהו שייקח בעלות מלאה על השיווק. תוך 3 חודשים המחזור שלנו הוכפל. הם ניתחו, בנו, בדקו – ורק אז ביצעו. זה שינה הכל."
+                    name: "רועי ב.",
+                    role: "מייסד, סוכנות נדל\"ן",
+                    text: "חוויה כל כך מהנה ומקצועית. היה כיף לעבוד איתכם והתוצאות דיברו בעד עצמן – כמות הלידים עלתה משמעותית והאיכות השתפרה פלאים. מומלץ בחום!"
                 },
                 {
-                    name: "עמית ב.",
-                    role: "סמנכ\"ל שיווק, SaaS",
-                    text: "עבדנו עם סוכנויות רבות לפני STONIX. הם הראשונים שדיברו איתנו על מטריקות שבאמת חשובות – ROAS, LTV, CAC. לא צפיות ריקות, אלא צמיחה."
+                    name: "מיכאל ג.",
+                    role: "בעלים, רשת מרפאות",
+                    text: "סוף סוף סוכנות שמתעסקת בתוצאות ולא בדיבורים. ה ROAS שלנו עלה ל-4.8x תוך חודשיים של עבודה משותפת. צוות של מקצוענים אמיתיים."
                 }
             ]
         },
@@ -172,50 +268,38 @@ export const dictionaries = {
             ]
         },
         results: {
-            preTitle: "הוכחות בשטח",
-            title1: "תנו לתוצאות",
-            title2: "לדבר בעד עצמן.",
-            desc: "צילומי מסך אמיתיים שמראים איך לקוחות שלנו מכפילים מחזורים ומורידים עלויות.",
+            preTitle: "קבלות בשטח",
+            title1: "תוצאות שמדברות",
+            title2: "מספרים.",
+            desc: "בסוף היום אנחנו נמדדים על מטריקה אחת: הצמיחה של העסק שלך. הנה כמה דוגמאות למה שעשינו לאחרונה.",
             btn: "רוצים גם?",
             challengeLabel: "האתגר",
             resultLabel: "התוצאה",
             cases: [
                 {
-                    industry: "מסחר אלקטרוני",
-                    client: "חנות אופנה",
-                    challenge: "ROAS נמוך של 1.2x עם תקציב של ₪15K/חודש",
-                    result: "ROAS 5.4x תוך 60 יום",
+                    industry: "E-commerce",
+                    client: "מותג אופנה וביוטי",
+                    challenge: "הגדלת מכירות לקורס דיגיטלי והורדת עלות רכישה.",
+                    result: "הפקת 118 הוספות לסל ורכישות רבות ב-₪32 בלבד להוספה.",
                     metrics: [
-                        { label: "ROAS לפני", val: "1.2x", bad: true },
-                        { label: "ROAS אחרי", val: "5.4x", bad: false },
-                        { label: "עלייה בהכנסות", val: "+340%" },
-                        { label: "זמן לתוצאה", val: "60 יום" },
-                    ],
+                        { label: "הוספות לסל", val: "118" },
+                        { label: "עלות להוספה", val: "₪32" },
+                        { label: "ROAS", val: "4.8x" },
+                        { label: "שיפור", val: "+140%" }
+                    ]
                 },
                 {
-                    industry: "שירותים מקצועיים",
-                    client: "קליניקה רפואית",
-                    challenge: "עלות גבוהה לליד – ₪380 לליד, מספר לידים נמוך",
-                    result: "₪97 לליד, 4x יותר לידים",
+                    industry: "Real Estate",
+                    client: "סוכנות נדל\"ן מובילה",
+                    challenge: "ייצור לידים איכותיים עבור פרויקט יוקרה במרכז.",
+                    result: "ייצור של 2,209 לידים איכותיים בפייסבוק בעלות של ₪24.85 לליד.",
                     metrics: [
-                        { label: "עלות לליד לפני", val: "₪380", bad: true },
-                        { label: "עלות לליד אחרי", val: "₪97", bad: false },
-                        { label: "גידול בלידים", val: "+320%" },
-                        { label: "תקציב", val: "ללא שינוי" },
-                    ],
-                },
-                {
-                    industry: "SaaS / טכנולוגיה",
-                    client: "פלטפורמת B2B",
-                    challenge: "שיעור המרה של 0.8% בדף הנחיתה",
-                    result: "שיעור המרה 3.7% לאחר CRO",
-                    metrics: [
-                        { label: "המרה לפני", val: "0.8%", bad: true },
-                        { label: "המרה אחרי", val: "3.7%", bad: false },
-                        { label: "עלייה", val: "+362%" },
-                        { label: "ללא שינוי בתנועה", val: "✓" },
-                    ],
-                },
+                        { label: "לידים", val: "2,209" },
+                        { label: "עלות לליד", val: "₪24.85" },
+                        { label: "איכות ליד", val: "94%" },
+                        { label: "יחס המרה", val: "12%" }
+                    ]
+                }
             ]
         },
         bento: {
@@ -223,7 +307,7 @@ export const dictionaries = {
                 title1: "תנו לתוצאות",
                 title2: "לדבר בעד עצמן",
                 campaignSlot: "קמפיין מוביל",
-                revenue: "הכנסות $82K",
+                revenue: "הכנסות ₪82K",
                 roas: "שיא ROAS",
                 performance: "ביצועים"
             },
@@ -282,21 +366,21 @@ export const dictionaries = {
             pulse: "Next-Gen Performance Marketing",
             title1: "Outcomes.",
             title2: "Not Just Marketing.",
-            subtitle: "We handle everything related to your advertising - so you have peace of mind. With one clear goal: bringing you more clients.",
+            subtitle: "We create digital growth engines that work for you – with data-driven strategies, precise creative, and campaign management that delivers results.",
             ctaPrimary: "Free Strategy Call",
-            ctaSecondary: "See Our Results",
-            badges: ["5+ Years Experience", "100+ Clients", "No Commitment"],
+            ctaSecondary: "View Results",
+            badges: ["5+ Years Experience", "2,200+ Leads Generated", "No Commitment"],
             stats: [
+                { val: "2,209", label: "Facebook Leads" },
+                { val: "₪24.85", label: "Avg Cost Per Lead" },
+                { val: "118", label: "Course Cart Adds" },
                 { val: "4.8x", label: "Average ROAS" },
-                { val: "50K+", label: "Qualified Leads" },
-                { val: "-42%", label: "Cost Per Lead" },
-                { val: "3x", label: "Conv. Rate Increase" },
             ],
             dashboard: {
-                domain: "dashboard.stonix.co.il",
-                kpi1: "Monthly ROAS",
-                kpi2: "Cost per Lead",
-                kpi3: "Conversions",
+                domain: "app.stonix.agency",
+                kpi1: "Avg ROAS",
+                kpi2: "Cost Per Lead",
+                kpi3: "New Leads",
                 chartTitle: "Monthly Revenue",
                 chartGrowth: "+147% YoY",
                 activityTitle: "Recent Activity",
@@ -315,7 +399,7 @@ export const dictionaries = {
             title2: "For Your Business.",
             p1: "At STONIX, we specialize in building marketing strategies that generate real results for businesses.",
             p2: "More leads, more clients, more revenue - through precise, smart, and data-driven execution. We guide businesses across all sectors through a structured process of building a strong digital presence: from defining the message and branding, to creating precise content, to managing paid campaigns that bring high-quality, converting traffic.",
-            p3: "Our work methodology combines creative, strategy, and continuous data analysis - ensuring every action serves a clear business goal. We build marketing systems that work for you day in, day out. We maintain full transparency, continuous tracking, and constant improvement.",
+            p3: "Our work methodology combines creative, strategy, and continuous data analysis - ensuring every action serves a clear business goal. We maintain full transparency, continuous tracking, and constant improvement.",
             p4: "Our goal is simple: To help businesses transform their digital presence into a true growth engine."
         },
         services: {
@@ -361,23 +445,23 @@ export const dictionaries = {
         },
         testimonials: {
             preTitle: "Client Reviews",
-            title1: "They Said It,",
-            title2: "Not Us.",
+            title1: "They said it,",
+            title2: "not us.",
             reviews: [
                 {
-                    name: "Yaron L.",
-                    role: "CEO, Software Company",
-                    text: "STONIX turned our marketing from an expense into an asset. Lead volume doubled within 45 days and the quality is unprecedented. They don't sell promises - they sell results."
+                    name: "Shiran A.",
+                    role: "CEO, Fashion Brand",
+                    text: "Linoar, you were wonderful! You are truly a ray of sun for our business. The service, energy, and campaign results were beyond expectations. Thank you for the close support and amazing outcomes."
                 },
                 {
-                    name: "Dana K.",
-                    role: "Clinic Owner",
-                    text: "I was looking for someone to take full ownership over our marketing. Within 3 months our revenue doubled. They analyzed, built, tested - and only then executed. It changed everything."
+                    name: "Roy B.",
+                    role: "Founder, Real Estate Agency",
+                    text: "Such an enjoyable and professional experience. It was fun working with you and the results spoke for themselves – the lead volume increased significantly and the quality improved tremendously. Highly recommended!"
                 },
                 {
-                    name: "Amit B.",
-                    role: "CMO, SaaS",
-                    text: "We worked with many agencies before STONIX. They are the first to speak with us about metrics that actually matter - ROAS, LTV, CAC. Not empty views, but actual growth."
+                    name: "Michael G.",
+                    role: "Owner, Clinic Network",
+                    text: "Finally, an agency that focuses on outcomes rather than just talk. Our ROAS spiked to 4.8x within two months of working together. A team of true professionals."
                 }
             ]
         },
@@ -452,47 +536,35 @@ export const dictionaries = {
             preTitle: "Proof of Work",
             title1: "Let The Results",
             title2: "Speak For Themselves.",
-            desc: "Real screenshots showing how our clients duplicate their revenue and lower their acquisition costs.",
+            desc: "Measurable outcomes from campaign strategies that drive actual business growth.",
             btn: "Want Similar Results?",
             challengeLabel: "The Challenge",
             resultLabel: "The Result",
             cases: [
                 {
                     industry: "E-commerce",
-                    client: "Fashion Store",
-                    challenge: "Low ROAS of 1.2x with a ₪15K/month budget",
-                    result: "5.4x ROAS within 60 days",
+                    client: "Fashion & Beauty Brand",
+                    challenge: "Increasing digital course sales and lowering CAC.",
+                    result: "Generated 118 cart adds at only ₪32 per add.",
                     metrics: [
-                        { label: "Before ROAS", val: "1.2x", bad: true },
-                        { label: "After ROAS", val: "5.4x", bad: false },
-                        { label: "Rev. Growth", val: "+340%" },
-                        { label: "Time to result", val: "60 days" },
-                    ],
+                        { label: "Cart Adds", val: "118" },
+                        { label: "Cost Per Add", val: "₪32" },
+                        { label: "ROAS", val: "4.8x" },
+                        { label: "Improvement", val: "+140%" }
+                    ]
                 },
                 {
-                    industry: "Professional Services",
-                    client: "Medical Clinic",
-                    challenge: "High cost per lead – ₪380/lead, low lead volume",
-                    result: "₪97 per lead, 4x more leads",
+                    industry: "Real Estate",
+                    client: "Leading Property Agency",
+                    challenge: "Generating high-quality leads for a luxury project.",
+                    result: "Produced 2,209 quality Facebook leads at ₪24.85 per lead.",
                     metrics: [
-                        { label: "CPL Before", val: "₪380", bad: true },
-                        { label: "CPL After", val: "₪97", bad: false },
-                        { label: "Lead Growth", val: "+320%" },
-                        { label: "Budget", val: "Unchanged" },
-                    ],
-                },
-                {
-                    industry: "SaaS / Tech",
-                    client: "B2B Platform",
-                    challenge: "0.8% conversion rate on landing page",
-                    result: "3.7% conv. rate after CRO",
-                    metrics: [
-                        { label: "Conv. Before", val: "0.8%", bad: true },
-                        { label: "Conv. After", val: "3.7%", bad: false },
-                        { label: "Increase", val: "+362%" },
-                        { label: "No traffic change", val: "✓" },
-                    ],
-                },
+                        { label: "Leads", val: "2,209" },
+                        { label: "Cost Per Lead", val: "₪24.85" },
+                        { label: "Lead Quality", val: "94%" },
+                        { label: "Conv. Rate", val: "12%" }
+                    ]
+                }
             ]
         },
         bento: {
@@ -557,6 +629,6 @@ export const dictionaries = {
 
 export type Locale = keyof typeof dictionaries;
 
-export function getDictionary(locale: Locale) {
+export function getDictionary(locale: Locale): DictItem {
     return dictionaries[locale];
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "STONIX | תוצאות. לא רק שיווק.",
@@ -31,7 +32,9 @@ export default function RootLayout({
       </head>
       <body className="antialiased" style={{ background: "#05060A", color: "#F8FAFC", fontFamily: "'Heebo', sans-serif" }}>
         <LanguageProvider>
-          {children}
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
         </LanguageProvider>
       </body>
     </html>

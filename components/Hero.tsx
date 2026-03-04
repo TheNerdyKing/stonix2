@@ -88,9 +88,7 @@ export default function Hero() {
         </div>
         <div className="flex items-center gap-3">
           <span className="font-black text-lg tracking-tight text-white">STONIX</span>
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#F97316" }}>
-            <span className="text-black font-black text-sm">SX</span>
-          </div>
+          <img src="/logo.png" alt="Stonix Logo" className="w-10 h-10 rounded-xl" />
         </div>
       </nav>
 
@@ -187,65 +185,21 @@ export default function Hero() {
               <div className="w-20" />
             </div>
 
-            <div className={`p-6 flex flex-col gap-5 ${dir === "rtl" ? "text-right" : "text-left"}`}>
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  { label: dict.hero.dashboard.kpi1, val: "4.8x", icon: TrendingUp, up: true },
-                  { label: dict.hero.dashboard.kpi2, val: "$42", icon: Target, up: false },
-                  { label: dict.hero.dashboard.kpi3, val: "3,241", icon: Zap, up: true },
-                ].map((k) => (
-                  <div key={k.label} className="rounded-2xl p-4 flex flex-col gap-2"
-                    style={{ background: "#12151F", border: "1px solid rgba(255,255,255,0.05)" }}>
-                    <div className="flex items-center justify-between">
-                      <k.icon className="w-4 h-4" style={{ color: "#F97316" }} />
-                      <span className="text-xs rounded-full px-2 py-0.5"
-                        style={{
-                          background: k.up ? "rgba(34,197,94,0.1)" : "rgba(249,115,22,0.1)",
-                          color: k.up ? "#22c55e" : "#F97316"
-                        }}>
-                        {k.up ? "↑" : "↓"}
-                      </span>
-                    </div>
-                    <div className="text-xl font-black text-white">{k.val}</div>
-                    <div className="text-[10px] uppercase tracking-widest" style={{ color: "#475569" }}>{k.label}</div>
+            <div className="relative aspect-[4/3] w-full overflow-hidden">
+              <img src="/dashboard.png" alt="Stonix Performance Dashboard" className="w-full h-full object-cover opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0E1118] via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-black/40 backdrop-blur-md border border-white/5">
+                <div className={`flex items-center justify-between ${dir === "rtl" ? "flex-row-reverse" : ""}`}>
+                  <div className={`flex flex-col ${dir === "rtl" ? "items-end" : "items-start"}`}>
+                    <span className="text-[10px] uppercase tracking-widest text-muted">{dict.hero.stats[0].label}</span>
+                    <span className="text-xl font-black text-white">{dict.hero.stats[0].val}</span>
                   </div>
-                ))}
-              </div>
-
-              <div className="rounded-2xl p-4" style={{ background: "#12151F", border: "1px solid rgba(255,255,255,0.05)" }}>
-                <div className={`flex items-center justify-between mb-4 ${dir === "rtl" ? "flex-row" : "flex-row-reverse"}`}>
-                  <span className="text-xs uppercase tracking-widest" style={{ color: "#475569" }}>{dict.hero.dashboard.chartTitle}</span>
-                  <span className="text-xs font-bold" style={{ color: "#22c55e" }}>{dict.hero.dashboard.chartGrowth}</span>
-                </div>
-                <div className="flex items-end gap-1 h-20">
-                  {[22, 35, 28, 45, 38, 55, 48, 65, 58, 72, 62, 80].map((h, i) => (
-                    <div key={i} className="flex-1 rounded-t-sm transition-all"
-                      style={{
-                        height: `${h}%`,
-                        background: i === 11 ? "#F97316" : i >= 9 ? "rgba(249,115,22,0.5)" : "rgba(255,255,255,0.1)"
-                      }} />
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-2xl p-4" style={{ background: "#12151F", border: "1px solid rgba(255,255,255,0.05)" }}>
-                <div className="text-xs uppercase tracking-widest mb-3" style={{ color: "#475569" }}>{dict.hero.dashboard.activityTitle}</div>
-                {[
-                  { label: dict.hero.dashboard.act1, val: dict.hero.dashboard.act1val, time: dict.hero.dashboard.act1time },
-                  { label: dict.hero.dashboard.act2, val: dict.hero.dashboard.act2val, time: dict.hero.dashboard.act2time },
-                ].map((row) => (
-                  <div key={row.label} className={`flex items-center justify-between py-2.5 border-b last:border-0 ${dir === "rtl" ? "flex-row" : "flex-row-reverse"}`}
-                    style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full" style={{ background: "#F97316" }} />
-                      <span className="text-sm text-white">{row.label}</span>
-                    </div>
-                    <div className={dir === "rtl" ? "text-left" : "text-right"}>
-                      <div className="text-sm font-bold" style={{ color: "#F97316" }}>{row.val}</div>
-                      <div className="text-[10px]" style={{ color: "#475569" }}>{row.time}</div>
-                    </div>
+                  <div className="h-8 w-px bg-white/10" />
+                  <div className={`flex flex-col ${dir === "rtl" ? "items-end" : "items-start"}`}>
+                    <span className="text-[10px] uppercase tracking-widest text-muted">{dict.hero.stats[1].label}</span>
+                    <span className="text-xl font-black text-white">{dict.hero.stats[1].val}</span>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
           </div>
