@@ -1,28 +1,21 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
-import { ArrowLeft, TrendingUp, Target, Zap, BarChart3, CheckCircle } from "lucide-react";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const STATS = [
-  { val: "4.8x", label: "ROAS ממוצע" },
-  { val: "50K+", label: "לידים איכותיים" },
-  { val: "-42%", label: "עלות לליד" },
-  { val: "3x", label: "שיפור בהמרות" },
-];
+import { ArrowLeft, ArrowRight, TrendingUp, Target, Zap, CheckCircle } from "lucide-react";
+import { useLanguage } from "./LanguageProvider";
+import { getDictionary } from "@/lib/i18n";
 
 const CLIENTS = [
   "BRAND A", "BRAND B", "BRAND C", "BRAND D", "BRAND E",
 ];
 
 export default function Hero() {
+  const { language, dir } = useLanguage();
+  const dict = getDictionary(language);
+
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
@@ -52,7 +45,6 @@ export default function Hero() {
       "-=0.5"
     );
 
-    // Subtle parallax glow on scroll
     gsap.to(glowRef.current, {
       y: -80,
       ease: "none",
@@ -63,24 +55,26 @@ export default function Hero() {
         scrub: 1.5,
       },
     });
+    ScrollTrigger.refresh();
   }, { scope: sectionRef });
+
+  const ArrowIcon = dir === "rtl" ? ArrowLeft : ArrowRight;
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex flex-col overflow-hidden" style={{ background: "#05060A" }}>
       {/* Nav */}
-      <nav className="relative z-50 flex items-center justify-between px-6 md:px-12 py-5">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#F97316" }}>
-            <span className="text-black font-black text-sm">SX</span>
-          </div>
-          <span className="font-black text-lg tracking-tight text-white">STONIX</span>
-        </div>
+      <nav className={`relative z-50 flex items-center justify-between px-6 md:px-12 py-5 ${dir === "rtl" ? "flex-row" : "flex-row-reverse"}`}>
+        <a href="#contact">
+          <button className="btn-primary px-5 py-2.5 text-sm">
+            {dict.nav.call}
+          </button>
+        </a>
         <div className="hidden md:flex items-center gap-8">
           {[
-            { href: "#services", label: "שירותים" },
-            { href: "#results", label: "תוצאות" },
-            { href: "#testimonials", label: "המלצות" },
-            { href: "#contact", label: "יצירת קשר" },
+            { href: "#services", label: dict.nav.services },
+            { href: "#results", label: dict.nav.results },
+            { href: "#testimonials", label: dict.nav.testimonials },
+            { href: "#contact", label: dict.nav.contact },
           ].map((l) => (
             <a key={l.href} href={l.href}
               className="text-sm font-medium transition-colors"
@@ -92,11 +86,12 @@ export default function Hero() {
             </a>
           ))}
         </div>
-        <a href="#contact">
-          <button className="btn-primary px-5 py-2.5 text-sm">
-            שיחת אסטרטגיה חינם
-          </button>
-        </a>
+        <div className="flex items-center gap-3">
+          <span className="font-black text-lg tracking-tight text-white">STONIX</span>
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#F97316" }}>
+            <span className="text-black font-black text-sm">SX</span>
+          </div>
+        </div>
       </nav>
 
       {/* Background glows */}
@@ -108,79 +103,77 @@ export default function Hero() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 flex-1 flex flex-col lg:flex-row items-center gap-12 px-6 md:px-12 pt-12 pb-16 max-w-7xl mx-auto w-full">
+      <div className={`relative z-10 flex-1 flex flex-col lg:flex-row items-center gap-12 px-6 md:px-12 pt-12 pb-16 max-w-7xl mx-auto w-full ${dir === "rtl" ? "" : "lg:flex-row-reverse"}`}>
 
-        {/* Left side text */}
-        <div className="flex-1 flex flex-col items-end text-right">
+        {/* Text side */}
+        <div className={`flex-1 flex flex-col ${dir === "rtl" ? "items-end text-right" : "items-start text-left"}`}>
           <div ref={headlineRef} className="flex flex-col gap-0">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 self-end"
+            <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 ${dir === "rtl" ? "self-end" : "self-start"}`}
               style={{ background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.25)" }}>
               <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#F97316" }} />
-              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#F97316" }}>שיווק ביצועים מהדור הבא</span>
+              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#F97316" }}>{dict.hero.pulse}</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter text-white">
-              תוצאות.
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter text-white">
+              {dict.hero.title1}
             </h1>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter ember-text mt-1">
-              לא רק שיווק.
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter ember-text mt-1">
+              {dict.hero.title2}
             </h1>
 
-            <p className="mt-6 text-lg md:text-xl leading-relaxed max-w-md" style={{ color: "#94A3B8" }}>
-              אנחנו לא סוכנות רגילה. אנחנו שותפים לצמיחה שלכם — עם נתונים, יצירתיות ואסטרטגיה שמניחים על השולחן תוצאות מדידות.
+            <p className="mt-6 text-base md:text-xl leading-relaxed max-w-md" style={{ color: "#94A3B8" }}>
+              {dict.hero.subtitle}
             </p>
 
-            <div className="flex gap-4 mt-8 flex-wrap justify-end">
+            <div className={`flex gap-4 mt-8 flex-wrap ${dir === "rtl" ? "justify-end" : "justify-start"}`}>
               <a href="#contact">
-                <button className="btn-primary">
-                  שיחת אסטרטגיה חינם
-                  <ArrowLeft className="w-4 h-4" />
+                <button className={`btn-primary ${dir === "ltr" ? "flex-row-reverse" : ""}`}>
+                  {dict.hero.ctaPrimary}
+                  <ArrowIcon className="w-4 h-4" />
                 </button>
               </a>
               <a href="#results">
                 <button className="btn-ghost">
-                  ראו תוצאות
+                  {dict.hero.ctaSecondary}
                 </button>
               </a>
             </div>
 
             {/* Trust badges */}
-            <div className="mt-8 flex items-center gap-6 justify-end">
-              {["ניסיון של 5+ שנים", "100+ לקוחות", "ללא התחייבות"].map((b) => (
-                <div key={b} className="flex items-center gap-1.5">
-                  <CheckCircle className="w-4 h-4" style={{ color: "#F97316" }} />
-                  <span className="text-sm" style={{ color: "#94A3B8" }}>{b}</span>
+            <div className={`mt-8 flex items-center gap-4 md:gap-6 flex-wrap ${dir === "rtl" ? "justify-end" : "justify-start"}`}>
+              {dict.hero.badges.map((b) => (
+                <div key={b} className="flex items-center gap-1.5 whitespace-nowrap">
+                  <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: "#F97316" }} />
+                  <span className="text-xs md:text-sm" style={{ color: "#94A3B8" }}>{b}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Stats row */}
-          <div ref={statsRef} className="grid grid-cols-4 gap-4 mt-12 w-full">
-            {STATS.map((s) => (
-              <div key={s.label} className="flex flex-col items-end p-4 rounded-2xl"
+          <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-12 w-full">
+            {dict.hero.stats.map((s) => (
+              <div key={s.label} className={`flex flex-col ${dir === "rtl" ? "items-end" : "items-start"} p-4 rounded-2xl`}
                 style={{ background: "#0E1118", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <span className="text-2xl md:text-3xl font-black ember-text">{s.val}</span>
-                <span className="text-xs mt-1 text-right" style={{ color: "#94A3B8" }}>{s.label}</span>
+                <span className={`text-[10px] md:text-xs mt-1 ${dir === "rtl" ? "text-right" : "text-left"}`} style={{ color: "#94A3B8" }}>{s.label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Right side: Dashboard frame */}
+        {/* Dashboard frame */}
         <div className="w-full lg:w-[48%] relative flex-shrink-0" ref={frameRef}>
-          {/* Glow aura behind frame */}
           <div className="absolute inset-0 rounded-[2rem] blur-[60px] opacity-30 pointer-events-none"
             style={{ background: "radial-gradient(ellipse, #F97316, #F59E0B, transparent 70%)", transform: "scale(1.2)" }} />
 
-          {/* Browser frame */}
           <div className="relative rounded-[2rem] overflow-hidden" style={{
             background: "#0E1118",
             border: "1px solid rgba(249,115,22,0.2)",
             boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)"
           }}>
-            {/* Browser bar */}
-            <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: "rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.02)" }}>
+            <div className={`flex items-center justify-between px-5 py-4 border-b ${dir === "rtl" ? "" : "flex-row-reverse"}`}
+              style={{ borderColor: "rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.02)" }}>
               <div className="flex gap-2">
                 {["#ff5f57", "#febc2e", "#28c840"].map((c, i) => (
                   <div key={i} className="w-3 h-3 rounded-full" style={{ background: c }} />
@@ -189,20 +182,17 @@ export default function Hero() {
               <div className="px-4 py-1.5 rounded-full text-xs font-mono flex items-center gap-2"
                 style={{ background: "rgba(255,255,255,0.04)", color: "#475569" }}>
                 <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#F97316" }} />
-                dashboard.stonix.co.il
+                {dict.hero.dashboard.domain}
               </div>
               <div className="w-20" />
             </div>
 
-            {/* Dashboard content */}
-            <div className="p-6 flex flex-col gap-5">
-
-              {/* Row 1: 3 KPI cards */}
+            <div className={`p-6 flex flex-col gap-5 ${dir === "rtl" ? "text-right" : "text-left"}`}>
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: "ROAS החודש", val: "4.8x", icon: TrendingUp, up: true },
-                  { label: "עלות לליד", val: "₪42", icon: Target, up: false },
-                  { label: "המרות", val: "3,241", icon: Zap, up: true },
+                  { label: dict.hero.dashboard.kpi1, val: "4.8x", icon: TrendingUp, up: true },
+                  { label: dict.hero.dashboard.kpi2, val: "$42", icon: Target, up: false },
+                  { label: dict.hero.dashboard.kpi3, val: "3,241", icon: Zap, up: true },
                 ].map((k) => (
                   <div key={k.label} className="rounded-2xl p-4 flex flex-col gap-2"
                     style={{ background: "#12151F", border: "1px solid rgba(255,255,255,0.05)" }}>
@@ -222,11 +212,10 @@ export default function Hero() {
                 ))}
               </div>
 
-              {/* Chart area */}
               <div className="rounded-2xl p-4" style={{ background: "#12151F", border: "1px solid rgba(255,255,255,0.05)" }}>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs uppercase tracking-widest" style={{ color: "#475569" }}>הכנסות חודשיות</span>
-                  <span className="text-xs font-bold" style={{ color: "#22c55e" }}>+147% YoY</span>
+                <div className={`flex items-center justify-between mb-4 ${dir === "rtl" ? "flex-row" : "flex-row-reverse"}`}>
+                  <span className="text-xs uppercase tracking-widest" style={{ color: "#475569" }}>{dict.hero.dashboard.chartTitle}</span>
+                  <span className="text-xs font-bold" style={{ color: "#22c55e" }}>{dict.hero.dashboard.chartGrowth}</span>
                 </div>
                 <div className="flex items-end gap-1 h-20">
                   {[22, 35, 28, 45, 38, 55, 48, 65, 58, 72, 62, 80].map((h, i) => (
@@ -239,20 +228,19 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Recent activity */}
               <div className="rounded-2xl p-4" style={{ background: "#12151F", border: "1px solid rgba(255,255,255,0.05)" }}>
-                <div className="text-xs uppercase tracking-widest mb-3" style={{ color: "#475569" }}>פעילות אחרונה</div>
+                <div className="text-xs uppercase tracking-widest mb-3" style={{ color: "#475569" }}>{dict.hero.dashboard.activityTitle}</div>
                 {[
-                  { label: "קמפיין Meta – לידים", val: "+23 לידים", time: "לפני 2 דק'" },
-                  { label: "Google Search – המרה", val: "עסקה חדשה", time: "לפני 8 דק'" },
+                  { label: dict.hero.dashboard.act1, val: dict.hero.dashboard.act1val, time: dict.hero.dashboard.act1time },
+                  { label: dict.hero.dashboard.act2, val: dict.hero.dashboard.act2val, time: dict.hero.dashboard.act2time },
                 ].map((row) => (
-                  <div key={row.label} className="flex items-center justify-between py-2.5 border-b last:border-0"
+                  <div key={row.label} className={`flex items-center justify-between py-2.5 border-b last:border-0 ${dir === "rtl" ? "flex-row" : "flex-row-reverse"}`}
                     style={{ borderColor: "rgba(255,255,255,0.04)" }}>
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 rounded-full" style={{ background: "#F97316" }} />
                       <span className="text-sm text-white">{row.label}</span>
                     </div>
-                    <div className="text-left">
+                    <div className={dir === "rtl" ? "text-left" : "text-right"}>
                       <div className="text-sm font-bold" style={{ color: "#F97316" }}>{row.val}</div>
                       <div className="text-[10px]" style={{ color: "#475569" }}>{row.time}</div>
                     </div>
@@ -264,10 +252,10 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Client logos row */}
+      {/* Brands row */}
       <div className="relative z-10 border-t px-6 md:px-12 py-6" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
-          <span className="text-xs uppercase tracking-widest" style={{ color: "#475569" }}>עובדים עם מותגים מובילים</span>
+        <div className={`max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4 ${dir === "rtl" ? "" : "flex-row-reverse"}`}>
+          <span className="text-xs uppercase tracking-widest" style={{ color: "#475569" }}>{dict.hero.clientsLabel}</span>
           <div className="flex items-center gap-8 flex-wrap">
             {CLIENTS.map((c) => (
               <span key={c} className="text-sm font-bold opacity-25 hover:opacity-50 transition-opacity cursor-default">{c}</span>

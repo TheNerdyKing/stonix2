@@ -1,13 +1,14 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+
 import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 import { Check } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 const timelineSteps = [
   { label: "הגדרה" },
@@ -126,6 +127,7 @@ export default function ProgressRing() {
       );
     }
 
+    ScrollTrigger.refresh();
   }, { scope: sectionRef });
 
   return (

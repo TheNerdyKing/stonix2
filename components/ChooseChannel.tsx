@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+
 import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 import { Search, Target, Palette, Settings, Users, Zap, Camera, Image, Video, PenTool, LineChart, Package } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 export default function ChooseChannel() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -53,6 +54,7 @@ export default function ChooseChannel() {
       );
     }
 
+    ScrollTrigger.refresh();
   }, { scope: sectionRef });
 
   return (

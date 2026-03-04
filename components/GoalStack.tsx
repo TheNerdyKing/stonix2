@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+
 import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 import { Target, TrendingUp, Users, Zap, ArrowRight } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 const goals = [
   {
@@ -78,6 +79,7 @@ export default function GoalStack() {
 
     });
 
+    ScrollTrigger.refresh();
   }, { scope: sectionRef });
 
   return (

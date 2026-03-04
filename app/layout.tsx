@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
+import { LanguageProvider } from "@/components/LanguageProvider";
 
 export const metadata: Metadata = {
   title: "STONIX | תוצאות. לא רק שיווק.",
@@ -29,7 +30,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased" style={{ background: "#05060A", color: "#F8FAFC", fontFamily: "'Heebo', sans-serif" }}>
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

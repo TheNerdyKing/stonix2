@@ -1,15 +1,14 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+
 import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 import { Plus, Minus } from "lucide-react";
 
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
+
 
 const FAQ_ITEMS = [
     {
@@ -52,7 +51,8 @@ export default function FAQ() {
                 scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
             }
         );
-    }, { scope: sectionRef });
+      ScrollTrigger.refresh();
+  }, { scope: sectionRef });
 
     return (
         <section ref={sectionRef} id="faq" className="section-pad" style={{ background: "#05060A", borderTop: "1px solid rgba(255,255,255,0.05)" }}>

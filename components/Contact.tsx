@@ -1,133 +1,132 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
-import { ArrowLeft, MessageCircle, Phone, Mail, Clock } from "lucide-react";
-
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
+import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react";
+import { useLanguage } from "./LanguageProvider";
+import { getDictionary } from "@/lib/i18n";
 
 export default function Contact() {
+    const { language, dir } = useLanguage();
+    const dict = getDictionary(language);
+
     const sectionRef = useRef<HTMLElement>(null);
-    const cardRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLDivElement>(null);
+    const [submitted, setSubmitted] = useState(false);
 
     useGSAP(() => {
         if (prefersReducedMotion()) return;
-        gsap.fromTo(cardRef.current,
-            { opacity: 0, y: 60, scale: 0.97 },
+
+        gsap.fromTo(titleRef.current?.children || [],
+            { opacity: 0, y: 30 },
             {
-                opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "expo.out",
-                scrollTrigger: { trigger: sectionRef.current, start: "top 75%" }
+                opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+                scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
             }
         );
+        ScrollTrigger.refresh();
     }, { scope: sectionRef });
 
+    const contactInfo = [
+        { icon: MapPin, label: dict.contact.addressTitle, val: dict.contact.addressValue },
+        { icon: Phone, label: dict.contact.phoneTitle, val: dict.contact.phoneValue },
+        { icon: Mail, label: dict.contact.emailTitle, val: dict.contact.emailValue },
+    ];
+
     return (
-        <section ref={sectionRef} id="contact" className="section-pad" style={{ background: "#05060A", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-            <div className="max-w-6xl mx-auto">
+        <section ref={sectionRef} id="contact" className="section-pad" style={{ background: "#05060A" }}>
+            <div className="max-w-7xl mx-auto px-6">
+                <div ref={titleRef} className={`mb-12 md:mb-16 flex flex-col ${dir === "rtl" ? "items-end text-right" : "items-start text-left"}`}>
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: "#F97316" }}>
+                        {dict.contact.preTitle}
+                    </p>
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white">
+                        {dict.contact.title1}
+                    </h2>
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter ember-text">
+                        {dict.contact.title2}
+                    </h2>
+                </div>
 
-                <div ref={cardRef} className="rounded-[3rem] overflow-hidden relative"
-                    style={{ background: "#0E1118", border: "1px solid rgba(249,115,22,0.2)" }}>
+                <div className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-start ${dir === "rtl" ? "" : "lg:flex-row-reverse"}`}>
 
-                    {/* top glow line */}
-                    <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, #F97316 50%, transparent)" }} />
-
-                    {/* ambient glow */}
-                    <div className="absolute bottom-0 inset-x-0 h-1/2 pointer-events-none"
-                        style={{ background: "linear-gradient(to top, rgba(249,115,22,0.04), transparent)" }} />
-
-                    <div className="relative z-10 grid lg:grid-cols-2 gap-0">
-
-                        {/* Left: CTA copy */}
-                        <div className="p-10 md:p-16 flex flex-col justify-center text-right">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full self-end mb-8"
-                                style={{ background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.25)" }}>
-                                <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#F97316" }} />
-                                <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#F97316" }}>מוכנים לצמוח?</span>
+                    {/* Info Column */}
+                    <div className={`flex flex-col gap-4 md:gap-6 ${dir === "rtl" ? "items-end text-right" : "items-start text-left"}`}>
+                        {contactInfo.map((item, i) => (
+                            <div key={i} className={`flex items-center gap-4 p-5 md:p-6 rounded-2xl md:rounded-3xl w-full ${dir === "rtl" ? "flex-row-reverse" : ""}`}
+                                style={{ background: "rgba(14,17,24,0.6)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center flex-shrink-0"
+                                    style={{ background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.2)" }}>
+                                    <item.icon className="w-5 h-5" style={{ color: "#F97316" }} />
+                                </div>
+                                <div className={dir === "rtl" ? "text-right" : "text-left"}>
+                                    <div className="text-[10px] md:text-xs font-bold uppercase tracking-wider mb-1" style={{ color: "#475569" }}>{item.label}</div>
+                                    <div className="text-base md:text-lg text-white font-medium">{item.val}</div>
+                                </div>
                             </div>
+                        ))}
 
-                            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-4">
-                                בואו נבנה
-                            </h2>
-                            <h2 className="text-4xl md:text-6xl font-black tracking-tighter ember-text mb-8">
-                                ביחד.
-                            </h2>
-
-                            <p className="text-lg leading-relaxed mb-10" style={{ color: "#94A3B8" }}>
-                                שיחת אסטרטגיה ראשונה – בחינם, ללא התחייבות. נבין את האתגרים שלכם ונציג תכנית פעולה ברורה.
+                        <div className={`mt-4 md:mt-8 p-6 md:p-10 rounded-2xl md:rounded-[2.5rem] w-full ${dir === "rtl" ? "text-right" : "text-left"}`} style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(167,139,250,0.1) 100%)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                            <h3 className="text-2xl font-black text-white mb-4">{language === 'he' ? 'בואו נדבר תכלס.' : "Let's talk business."}</h3>
+                            <p className="leading-relaxed" style={{ color: "#94A3B8" }}>
+                                {language === 'he'
+                                    ? 'אנחנו לא מחפשים למכור לכם חלומות. אנחנו מחפשים שותפים שרוצים לגדול איתנו. השאירו פרטים ונתחיל לעבוד.'
+                                    : "We're not looking to sell you dreams. We're looking for partners who want to grow with us. Leave your details and let's get to work."}
                             </p>
+                        </div>
+                    </div>
 
-                            <div className="flex flex-col gap-4 mb-10">
-                                {[
-                                    { icon: Clock, text: "תוך 24 שעות נחזור אליכם" },
-                                    { icon: MessageCircle, text: "זמינים גם בוואטסאפ" },
-                                    { icon: Phone, text: "055-2664456" },
-                                    { icon: Mail, text: "a.s.mediagroup2023@gmail.com" },
-                                ].map((item) => (
-                                    <div key={item.text} className="flex items-center justify-end gap-3">
-                                        <span className="text-sm" style={{ color: "#94A3B8" }}>{item.text}</span>
-                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                                            style={{ background: "rgba(249,115,22,0.1)" }}>
-                                            <item.icon className="w-4 h-4" style={{ color: "#F97316" }} />
-                                        </div>
+                    {/* Form Column */}
+                    <div className="p-6 md:p-12 rounded-2xl md:rounded-[2.5rem]" style={{ background: "#0E1118", border: "1px solid rgba(255,255,255,0.08)" }}>
+                        {!submitted ? (
+                            <form className="flex flex-col gap-6" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+                                <div className={`grid md:grid-cols-2 gap-6`}>
+                                    <div className={`flex flex-col gap-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
+                                        <label className="text-xs font-bold uppercase tracking-widest px-1" style={{ color: "#475569" }}>{dict.contact.formName}</label>
+                                        <input required type="text" className="contact-input" placeholder={language === 'he' ? "ישראל ישראלי" : "John Doe"} />
                                     </div>
-                                ))}
-                            </div>
-
-                            <div className="flex gap-4 justify-end flex-wrap">
-                                <a href="https://wa.me/972552664456" target="_blank" rel="noopener noreferrer">
-                                    <button className="btn-primary">
-                                        וואטסאפ עכשיו
-                                        <ArrowLeft className="w-4 h-4" />
-                                    </button>
-                                </a>
-                                <a href="tel:0552664456">
-                                    <button className="btn-ghost">
-                                        התקשרו אלינו
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Right: Mock booking card */}
-                        <div className="p-10 md:p-16 flex items-center justify-center lg:border-r"
-                            style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-                            <div className="w-full max-w-sm rounded-[2rem] overflow-hidden"
-                                style={{ background: "#12151F", border: "1px solid rgba(255,255,255,0.07)" }}>
-
-                                <div className="p-6 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-                                    <h3 className="text-lg font-black text-white text-right mb-1">שיחת אסטרטגיה</h3>
-                                    <p className="text-sm text-right" style={{ color: "#94A3B8" }}>30 דקות · חינם · ללא התחייבות</p>
+                                    <div className={`flex flex-col gap-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
+                                        <label className="text-xs font-bold uppercase tracking-widest px-1" style={{ color: "#475569" }}>{dict.contact.formPhone}</label>
+                                        <input required type="tel" className="contact-input" placeholder="050-0000000" />
+                                    </div>
                                 </div>
 
-                                <div className="p-6 flex flex-col gap-4">
-                                    {[
-                                        { label: "שם מלא", placeholder: "ישראל ישראלי" },
-                                        { label: "חברה", placeholder: "שם החברה שלכם" },
-                                        { label: "מספר טלפון", placeholder: "05X-XXXXXXX" },
-                                        { label: "תקציב חודשי", placeholder: "₪15,000+" },
-                                    ].map((f) => (
-                                        <div key={f.label}>
-                                            <label className="block text-right text-xs mb-1.5 font-medium" style={{ color: "#94A3B8" }}>{f.label}</label>
-                                            <div className="h-11 w-full rounded-xl px-4 flex items-center text-right"
-                                                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
-                                                <span className="text-sm w-full text-right" style={{ color: "#475569" }}>{f.placeholder}</span>
-                                            </div>
-                                        </div>
-                                    ))}
-
-                                    <a href="https://wa.me/972552664456" target="_blank" rel="noopener noreferrer" className="w-full">
-                                        <button className="btn-primary w-full justify-center mt-2" style={{ borderRadius: "12px" }}>
-                                            שלחו פרטים
-                                        </button>
-                                    </a>
+                                <div className={`flex flex-col gap-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
+                                    <label className="text-xs font-bold uppercase tracking-widest px-1" style={{ color: "#475569" }}>{dict.contact.formBusiness}</label>
+                                    <input required type="text" className="contact-input" placeholder={language === 'he' ? "שם העסק שלך" : "Your Business Name"} />
                                 </div>
+
+                                <div className={`flex flex-col gap-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
+                                    <label className="text-xs font-bold uppercase tracking-widest px-1" style={{ color: "#475569" }}>{dict.contact.formEmail}</label>
+                                    <input required type="email" className="contact-input" placeholder="email@example.com" />
+                                </div>
+
+                                <label className={`flex items-start gap-3 cursor-pointer group mt-2 ${dir === "rtl" ? "flex-row-reverse text-right" : "text-left"}`}>
+                                    <input type="checkbox" required className="mt-1 w-4 h-4 rounded border-gray-800 bg-gray-900 checked:bg-orange-500 transition-all" />
+                                    <span className="text-xs leading-relaxed" style={{ color: "#475569" }}>{dict.contact.agreed}</span>
+                                </label>
+
+                                <button type="submit" className={`btn-primary w-full mt-4 flex items-center justify-center gap-3 py-6 ${dir === "rtl" ? "flex-row-reverse" : ""}`}>
+                                    {dict.contact.formSubmit}
+                                    <Send className="w-5 h-5" />
+                                </button>
+                            </form>
+                        ) : (
+                            <div className="py-20 flex flex-col items-center text-center">
+                                <div className="w-20 h-20 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-6">
+                                    <CheckCircle2 className="w-10 h-10 text-orange-500" />
+                                </div>
+                                <h3 className="text-3xl font-black text-white mb-4">{language === 'he' ? 'הפרטים התקבלו!' : 'Details Received!'}</h3>
+                                <p className="text-lg max-w-sm" style={{ color: "#94A3B8" }}>
+                                    {dict.contact.successText}
+                                </p>
+                                <button onClick={() => setSubmitted(false)} className="mt-8 text-sm font-bold uppercase tracking-widest text-orange-500 hover:text-orange-400 transition-colors">
+                                    {language === 'he' ? 'שליחת טופס נוסף' : 'Send another form'}
+                                </button>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>

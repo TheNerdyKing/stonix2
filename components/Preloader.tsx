@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef, useState, useLayoutEffect } from "react";
-import { gsap } from "gsap";
+
 import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 
 interface PreloaderProps {
@@ -46,6 +47,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     );
     tl.to(iconRef.current, { scale: 1.1, opacity: 0, duration: 0.3, delay: 0.1 });
 
+    ScrollTrigger.refresh();
   }, { scope: containerRef, dependencies: [shouldAnimate, onComplete] });
 
   const handleSkip = () => {

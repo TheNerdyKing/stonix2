@@ -1,13 +1,12 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Search, Target, Palette, Settings, TrendingUp, Zap, MousePointerClick } from "lucide-react";
 import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 const PANELS = [
   {
@@ -224,6 +223,7 @@ export default function ChannelScroller() {
       });
     });
 
+    ScrollTrigger.refresh();
   }, { scope: sectionRef });
 
   return (
