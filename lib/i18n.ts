@@ -35,7 +35,20 @@ interface DictItem {
         cta: string;
         list: { id: string; title: string; subtitle: string; desc: string; perks: string[]; mockMetric: string }[];
     };
-    testimonials: { preTitle: string; title1: string; title2: string; reviews: { name: string; role: string; text: string }[] };
+    testimonials: {
+        preTitle: string;
+        title1: string;
+        title2: string;
+        reviews: { name: string; role: string; text: string }[];
+        mediaReviews: {
+            type: "image" | "video";
+            src: string;
+            thumbnail?: string;
+            name: string;
+            role: string;
+            text?: string;
+        }[];
+    };
     pricing: {
         preTitle: string;
         title1: string;
@@ -197,6 +210,96 @@ export const dictionaries: Record<"he" | "en", DictItem> = {
                     name: "מיכאל ג.",
                     role: "בעלים, רשת מרפאות",
                     text: "סוף סוף סוכנות שמתעסקת בתוצאות ולא בדיבורים. ה ROAS שלנו עלה ל-4.8x תוך חודשיים של עבודה משותפת. צוות של מקצוענים אמיתיים."
+                }
+            ],
+            mediaReviews: [
+                {
+                    type: "video",
+                    src: "/assets/Captions_070284.MP4",
+                    thumbnail: "/assets/IMG_9310.jpg",
+                    name: "יפה",
+                    role: "לקוחה מרוצה",
+                    text: "התוצאות היו פשוט מדהימות מהרגע הראשון."
+                },
+                {
+                    type: "video",
+                    src: "/assets/המלצה יפה ערוך (1).MP4",
+                    thumbnail: "/assets/IMG_9311.jpg",
+                    name: "יפה (גרסה ערוכה)",
+                    role: "לקוחה מרוצה",
+                    text: "חוויה שלא אשכח."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9312.jpg",
+                    name: "שמוליק",
+                    role: "מנכ\"ל חברה",
+                    text: "מקצועיות ללא פשרות."
+                },
+                {
+                    type: "video",
+                    src: "/assets/Captions_343FA8.MP4",
+                    thumbnail: "/assets/IMG_9316.jpg",
+                    name: "רועי א.",
+                    role: "יזם",
+                    text: "שיפור משמעותי בהמרות תוך זמן קצר."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9313.jpg",
+                    name: "איילה",
+                    role: "בעלת מותג אופנה",
+                    text: "הצוות של STONIX פשוט קלט את הוויב שלנו."
+                },
+                {
+                    type: "video",
+                    src: "/assets/המלצה שמוליק (1).MOV",
+                    thumbnail: "/assets/IMG_9318.jpg",
+                    name: "שמואל",
+                    role: "בעלים חברת נדלן",
+                    text: "חוויה יוצאת דופן של שירות ותוצאות."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9315.jpg",
+                    name: "תמר",
+                    role: "מנהלת שיווק",
+                    text: "עבודה יסודית ומקצועית."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9317.jpg",
+                    name: "דנה",
+                    role: "בעלת עסק",
+                    text: "שירות מקצועי ותוצאות מרשימות."
+                },
+                {
+                    type: "image",
+                    src: "/assets/Untitled design (62).png",
+                    name: "לקוח מרוצה",
+                    role: "בעל עסק",
+                    text: "ממליץ בחום."
+                },
+                {
+                    type: "image",
+                    src: "/assets/Untitled design (63).png",
+                    name: "לקוח מרוצה",
+                    role: "יזם",
+                    text: "תוצאות מעבר לציפיות."
+                },
+                {
+                    type: "image",
+                    src: "/assets/Untitled design (64).png",
+                    name: "לקוח מרוצה",
+                    role: "מנהל שיווק",
+                    text: "עבודה מקצועית ומדויקת."
+                },
+                {
+                    type: "image",
+                    src: "/assets/Untitled design (65).png",
+                    name: "לקוח מרוצה",
+                    role: "בעל מותג",
+                    text: "פשוט מעולה!"
                 }
             ]
         },
@@ -462,6 +565,96 @@ export const dictionaries: Record<"he" | "en", DictItem> = {
                     name: "Michael G.",
                     role: "Owner, Clinic Network",
                     text: "Finally, an agency that focuses on outcomes rather than just talk. Our ROAS spiked to 4.8x within two months of working together. A team of true professionals."
+                }
+            ],
+            mediaReviews: [
+                {
+                    type: "video",
+                    src: "/assets/Captions_070284.MP4",
+                    thumbnail: "/assets/IMG_9310.jpg",
+                    name: "Yafa",
+                    role: "Satisfied Client",
+                    text: "The results were simply amazing from the very first moment."
+                },
+                {
+                    type: "video",
+                    src: "/assets/המלצה יפה ערוך (1).MP4",
+                    thumbnail: "/assets/IMG_9311.jpg",
+                    name: "Yafa (Edited)",
+                    role: "Satisfied Client",
+                    text: "An experience I'll never forget."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9312.jpg",
+                    name: "Shmulik",
+                    role: "Company CEO",
+                    text: "Uncompromising professionalism."
+                },
+                {
+                    type: "video",
+                    src: "/assets/Captions_343FA8.MP4",
+                    thumbnail: "/assets/IMG_9316.jpg",
+                    name: "Roy A.",
+                    role: "Entrepreneur",
+                    text: "Significant improvement in conversions within a short time."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9313.jpg",
+                    name: "Ayala",
+                    role: "Fashion Brand Owner",
+                    text: "The STONIX team just caught our vibe."
+                },
+                {
+                    type: "video",
+                    src: "/assets/המלצה שמוליק (1).MOV",
+                    thumbnail: "/assets/IMG_9318.jpg",
+                    name: "Shmuel",
+                    role: "Real Estate Owner",
+                    text: "An exceptional experience of service and results."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9315.jpg",
+                    name: "Tamar",
+                    role: "Marketing Manager",
+                    text: "Thorough and professional work."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9317.jpg",
+                    name: "Dana",
+                    role: "Business Owner",
+                    text: "Professional service and impressive results."
+                },
+                {
+                    type: "image",
+                    src: "/assets/Untitled design (62).png",
+                    name: "Happy Client",
+                    role: "Business Owner",
+                    text: "Highly recommended."
+                },
+                {
+                    type: "image",
+                    src: "/assets/Untitled design (63).png",
+                    name: "Happy Client",
+                    role: "Entrepreneur",
+                    text: "Results beyond expectations."
+                },
+                {
+                    type: "image",
+                    src: "/assets/Untitled design (64).png",
+                    name: "Happy Client",
+                    role: "Marketing Manager",
+                    text: "Professional and precise work."
+                },
+                {
+                    type: "image",
+                    src: "/assets/Untitled design (65).png",
+                    name: "Happy Client",
+                    role: "Brand Owner",
+                    text: "Simply excellent!"
                 }
             ]
         },

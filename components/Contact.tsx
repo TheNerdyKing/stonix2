@@ -85,22 +85,22 @@ export default function Contact() {
                                 <div className={`grid md:grid-cols-2 gap-6`}>
                                     <div className={`flex flex-col gap-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
                                         <label className="text-xs font-bold uppercase tracking-widest px-1" style={{ color: "#475569" }}>{dict.contact.formName}</label>
-                                        <input required type="text" className="contact-input" placeholder={language === 'he' ? "ישראל ישראלי" : "John Doe"} />
+                                        <input required type="text" className="contact-input rounded py-1 px-2" placeholder={language === 'he' ? "ישראל ישראלי" : "John Doe"} />
                                     </div>
                                     <div className={`flex flex-col gap-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
                                         <label className="text-xs font-bold uppercase tracking-widest px-1" style={{ color: "#475569" }}>{dict.contact.formPhone}</label>
-                                        <input required type="tel" className="contact-input" placeholder="050-0000000" />
+                                        <input required type="tel" className="contact-input rounded py-1 px-2s" placeholder="050-0000000" />
                                     </div>
                                 </div>
 
                                 <div className={`flex flex-col gap-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
                                     <label className="text-xs font-bold uppercase tracking-widest px-1" style={{ color: "#475569" }}>{dict.contact.formBusiness}</label>
-                                    <input required type="text" className="contact-input" placeholder={language === 'he' ? "שם העסק שלך" : "Your Business Name"} />
+                                    <input required type="text" className="contact-input rounded py-1 px-2" placeholder={language === 'he' ? "שם העסק שלך" : "Your Business Name"} />
                                 </div>
 
                                 <div className={`flex flex-col gap-2 ${dir === "rtl" ? "text-right" : "text-left"}`}>
                                     <label className="text-xs font-bold uppercase tracking-widest px-1" style={{ color: "#475569" }}>{dict.contact.formEmail}</label>
-                                    <input required type="email" className="contact-input" placeholder="email@example.com" />
+                                    <input required type="email" className="contact-input rounded py-1 px-2" placeholder="email@example.com" />
                                 </div>
 
                                 <label className={`flex items-start gap-3 cursor-pointer group mt-2 ${dir === "rtl" ? "flex-row-reverse text-right" : "text-left"}`}>

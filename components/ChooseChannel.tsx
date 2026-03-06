@@ -6,7 +6,20 @@ import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
-import { Search, Target, Palette, Settings, Users, Zap, Camera, Image, Video, PenTool, LineChart, Package } from "lucide-react";
+import { 
+  Search, 
+  Target, 
+  Palette, 
+  Settings, 
+  Users, 
+  Zap, 
+  Camera, 
+  Image, 
+  Video, 
+  PenTool, 
+  LineChart, 
+  Package 
+} from "lucide-react";
 
 
 
