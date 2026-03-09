@@ -241,14 +241,14 @@ export default function Hero() {
                 className="flex-shrink-0 w-[200px] md:w-[260px]"
               >
                 <div
-                  className="h-[130px] md:h-[160px] rounded-3xl flex items-center justify-center p-6 shadow-lg transition-transform duration-300 hover:scale-105"
+                  className="h-[130px] md:h-[160px] rounded-3xl flex items-center justify-center p-3 shadow-lg transition-transform duration-300 hover:scale-105"
                   style={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.07)" }}
                 >
                   <img
                     src={src}
                     alt="Partner Brand"
                     className="max-h-full max-w-full object-contain"
-                    style={{ maxHeight: "90px" }}
+                    style={{ maxHeight: "120px", width: "100%" }}
                   />
                 </div>
               </div>
