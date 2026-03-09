@@ -91,20 +91,19 @@ export default function Hero() {
       repeat: -1,
     });
 
-    // ── Brand cards: staggered reveal on scroll
-    const brandCards = marqueeRef.current?.querySelectorAll(".flex-shrink-0");
-    if (brandCards) {
-      gsap.fromTo(brandCards,
-        { opacity: 0, x: dir === "rtl" ? 50 : -50 },
-        {
-          opacity: 1, x: 0, duration: 0.8, stagger: 0.05, ease: "expo.out",
-          scrollTrigger: {
-            trigger: marqueeRef.current,
-            start: "top 95%",
-            toggleActions: "play none none none"
-          }
-        }
-      );
+    // ── Infinite Seamless Marquee for Brands
+    if (marqueeRef.current) {
+      const marqueeInner = marqueeRef.current.querySelector('.marquee-inner') as HTMLElement;
+      if (marqueeInner) {
+        const totalWidth = marqueeInner.offsetWidth / 2; // Divided by 2 because we clone the list
+
+        gsap.to(marqueeRef.current, {
+          x: dir === "rtl" ? totalWidth : -totalWidth,
+          duration: 60,
+          ease: "none",
+          repeat: -1,
+        });
+      }
     }
 
     ScrollTrigger.refresh();
@@ -240,40 +239,21 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="relative group max-w-[1600px] mx-auto px-6">
-          <div
-            ref={marqueeRef}
-            className="flex overflow-x-auto gap-6 pb-8 no-scrollbar snap-x snap-mandatory scroll-smooth"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {CLIENT_LOGOS.map((src, i) => (
-              <div key={i} className="flex-shrink-0 w-[180px] md:w-[240px] snap-center">
-                <div className="aspect-[3/2] rounded-[2rem] bg-[#0E1118]/80 border border-white/5 flex items-center justify-center p-8 transition-all duration-500 hover:border-orange-500/30 hover:bg-[#0E1118] group/logo shadow-xl">
-                  <img
-                    src={src}
-                    alt="Partner Brand"
-                    className="max-h-full max-w-full object-contain filter grayscale brightness-0 invert opacity-40 group-hover/logo:opacity-100 transition-all duration-500"
-                    style={{ filter: "grayscale(1) brightness(0) invert(1)" }}
-                  />
+        <div className="relative overflow-hidden max-w-[100vw]">
+          <div ref={marqueeRef} className="flex whitespace-nowrap">
+            <div className="flex gap-6 marquee-inner">
+              {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((src, i) => (
+                <div key={i} className="flex-shrink-0 w-[180px] md:w-[240px]">
+                  <div className="aspect-[3/2] rounded-[2rem] bg-[#0E1118]/80 border border-white/5 flex items-center justify-center p-8 transition-all duration-500 hover:border-orange-500/30 hover:bg-[#0E1118] group/logo shadow-xl">
+                    <img
+                      src={src}
+                      alt="Partner Brand"
+                      className="max-h-full max-w-full object-contain transition-all duration-500 opacity-80 group-hover/logo:opacity-100"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Navigation Buttons - Matching Testimonials */}
-          <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none flex justify-between px-10 z-20">
-            <button
-              onClick={() => marqueeRef.current?.scrollBy({ left: -300, behavior: 'smooth' })}
-              className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto hover:bg-orange-500 hover:border-orange-500 transition-all opacity-0 group-hover:opacity-100"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-            </button>
-            <button
-              onClick={() => marqueeRef.current?.scrollBy({ left: 300, behavior: 'smooth' })}
-              className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto hover:bg-orange-500 hover:border-orange-500 transition-all opacity-0 group-hover:opacity-100"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-            </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
