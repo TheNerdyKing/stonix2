@@ -91,17 +91,20 @@ export default function Hero() {
       repeat: -1,
     });
 
-    // ── Infinite Marquee
-    if (marqueeRef.current) {
-      const marqueeContent = marqueeRef.current.children[0] as HTMLElement;
-      const totalWidth = marqueeContent.offsetWidth;
-
-      gsap.to(marqueeRef.current, {
-        x: dir === "rtl" ? totalWidth / 2 : -totalWidth / 2,
-        duration: 40,
-        ease: "none",
-        repeat: -1,
-      });
+    // ── Brand cards: staggered reveal on scroll
+    const brandCards = marqueeRef.current?.querySelectorAll(".flex-shrink-0");
+    if (brandCards) {
+      gsap.fromTo(brandCards,
+        { opacity: 0, x: dir === "rtl" ? 50 : -50 },
+        {
+          opacity: 1, x: 0, duration: 0.8, stagger: 0.05, ease: "expo.out",
+          scrollTrigger: {
+            trigger: marqueeRef.current,
+            start: "top 95%",
+            toggleActions: "play none none none"
+          }
+        }
+      );
     }
 
     ScrollTrigger.refresh();
@@ -226,14 +229,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Brands row - Optimized Marquee */}
-      <div className="relative z-10 border-t py-16 md:py-24 overflow-hidden"
-        style={{
-          borderColor: "rgba(255,255,255,0.06)",
-          maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
-          WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)"
-        }}>
-
+      {/* Brands Slider Section - Uniform with Testimonials */}
+      <div className="relative z-10 border-t py-20 overflow-hidden" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
         <div className="max-w-7xl mx-auto px-6 mb-12">
           <div className={`flex flex-col items-center gap-3`}>
             <div className="h-[1px] w-12 bg-[#F97316] mb-2" />
@@ -243,24 +240,43 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="flex whitespace-nowrap pointer-events-none select-none" ref={marqueeRef}>
-          <div className="flex gap-24 md:gap-36 items-center px-12">
-            {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt="Partner Brand"
-                className="h-10 md:h-14 w-auto object-contain transition-all duration-500 opacity-60 hover:opacity-100"
-                style={{
-                  filter: "grayscale(1) brightness(0) invert(1) contrast(1.2)"
-                }}
-              />
+        <div className="relative group max-w-[1600px] mx-auto px-6">
+          <div
+            ref={marqueeRef}
+            className="flex overflow-x-auto gap-6 pb-8 no-scrollbar snap-x snap-mandatory scroll-smooth"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {CLIENT_LOGOS.map((src, i) => (
+              <div key={i} className="flex-shrink-0 w-[180px] md:w-[240px] snap-center">
+                <div className="aspect-[3/2] rounded-[2rem] bg-[#0E1118]/80 border border-white/5 flex items-center justify-center p-8 transition-all duration-500 hover:border-orange-500/30 hover:bg-[#0E1118] group/logo shadow-xl">
+                  <img
+                    src={src}
+                    alt="Partner Brand"
+                    className="max-h-full max-w-full object-contain filter grayscale brightness-0 invert opacity-40 group-hover/logo:opacity-100 transition-all duration-500"
+                    style={{ filter: "grayscale(1) brightness(0) invert(1)" }}
+                  />
+                </div>
+              </div>
             ))}
+          </div>
+
+          {/* Navigation Buttons - Matching Testimonials */}
+          <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none flex justify-between px-10 z-20">
+            <button
+              onClick={() => marqueeRef.current?.scrollBy({ left: -300, behavior: 'smooth' })}
+              className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto hover:bg-orange-500 hover:border-orange-500 transition-all opacity-0 group-hover:opacity-100"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <button
+              onClick={() => marqueeRef.current?.scrollBy({ left: 300, behavior: 'smooth' })}
+              className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto hover:bg-orange-500 hover:border-orange-500 transition-all opacity-0 group-hover:opacity-100"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+            </button>
           </div>
         </div>
       </div>
-
     </section>
   );
 }
-
