@@ -28,10 +28,15 @@ html {
   height: auto;
 }
 
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
-  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 

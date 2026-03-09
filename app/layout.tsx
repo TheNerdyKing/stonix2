@@ -15,6 +15,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 import { GSAPInitializer } from "@/components/GSAPInitializer";
 
 export default function RootLayout({
@@ -32,7 +39,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased" style={{ background: "#05060A", color: "#F8FAFC", fontFamily: "'Heebo', sans-serif" }}>
+      <body className="antialiased overflow-x-hidden w-full max-w-full m-0 p-0" style={{ background: "#05060A", color: "#F8FAFC", fontFamily: "'Heebo', sans-serif" }}>
         <LanguageProvider>
           <GSAPInitializer />
           <SmoothScroll>
