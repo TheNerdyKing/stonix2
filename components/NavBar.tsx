@@ -24,13 +24,13 @@ export default function NavBar() {
     <div className="sticky top-0 z-50 w-full">
       <nav className={`flex items-center justify-between px-4 md:px-12 py-1.5 md:py-2 bg-white/[0.03] backdrop-blur-[12px] border-b border-white/[0.08] ${dir === "ltr" ? "flex-row" : "flex-row-reverse"}`}>
         <div className="flex items-center">
-          <div className="relative bg-white rounded-xl px-2 py-1 shadow-md">
+          <div className="relative">
             <Image
-              src="/assets/stonix-logo.jpg"
+              src="/logo.png"
               alt="STONIX – Results, Not Marketing"
-              width={120}
-              height={52}
-              className="object-contain w-24 md:w-[120px] h-auto"
+              width={140}
+              height={60}
+              className="object-contain w-32 md:w-[140px] h-auto drop-shadow-lg"
               priority
             />
           </div>
