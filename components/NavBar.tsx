@@ -22,7 +22,7 @@ export default function NavBar() {
 
   return (
     <div className="sticky top-0 z-50 w-full">
-      <nav className={`flex items-center justify-between px-6 md:px-12 py-3 bg-white/[0.03] backdrop-blur-[12px] border-b border-white/[0.08] ${dir === "ltr" ? "flex-row" : "flex-row-reverse"}`}>
+      <nav className={`flex items-center justify-between px-6 md:px-12 py-2 bg-white/[0.03] backdrop-blur-[12px] border-b border-white/[0.08] ${dir === "ltr" ? "flex-row" : "flex-row-reverse"}`}>
         <div className="flex items-center">
           <div className="relative bg-white rounded-xl px-2 py-1 shadow-md">
             <Image

@@ -8,9 +8,9 @@ import { ArrowLeft, ArrowRight, TrendingUp, Target, Zap, CheckCircle } from "luc
 import { useLanguage } from "./LanguageProvider";
 import { getDictionary } from "@/lib/i18n";
 
-const CLIENTS = [
-  "BRAND A", "BRAND B", "BRAND C", "BRAND D", "BRAND E",
-];
+const LOGO_COUNT = 43;
+const CLIENT_LOGOS = Array.from({ length: LOGO_COUNT }, (_, i) => `/assets/logos/logo-${i + 1}${i === 0 ? '.jpg' : '.png'}`);
+// Note: logo-1 is .jpg, others are .png as per previous file listing
 
 export default function Hero() {
   const { language, dir } = useLanguage();
@@ -24,6 +24,7 @@ export default function Hero() {
   const mainBlobRef = useRef<HTMLDivElement>(null);
   const pulsePillRef = useRef<HTMLDivElement>(null);
   const btnGroupRef = useRef<HTMLDivElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (prefersReducedMotion()) {
@@ -35,20 +36,17 @@ export default function Hero() {
     }
 
     const tl = gsap.timeline({
-      delay: 0.2, // Small delay to ensure hydration/DOM transition is complete
+      delay: 0.2,
     });
 
     // ── Headline: fade + slide-up
-    const headlineItems = headlineRef.current?.children;
-    if (headlineItems) {
-      tl.fromTo(
-        headlineItems,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.75, stagger: 0.1, ease: "power3.out" }
-      );
-    }
+    tl.fromTo(
+      headlineRef.current?.children || [],
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.75, stagger: 0.1, ease: "power3.out" }
+    );
 
-    // ── Buttons: slide in from left → right, staggered
+    // ── Buttons
     tl.fromTo(
       btnGroupRef.current?.children || [],
       { opacity: 0, x: -50 },
@@ -56,7 +54,7 @@ export default function Hero() {
       "-=0.3"
     );
 
-    // ── Stats cards: slide in from left → right, staggered
+    // ── Stats cards
     tl.fromTo(
       statsRef.current?.children || [],
       { opacity: 0, x: -60 },
@@ -64,7 +62,7 @@ export default function Hero() {
       "-=0.25"
     );
 
-    // ── Dashboard frame: slide in from left → right
+    // ── Dashboard frame
     tl.fromTo(
       frameRef.current,
       { opacity: 0, x: -90, scale: 0.96 },
@@ -72,7 +70,7 @@ export default function Hero() {
       "-=0.55"
     );
 
-    // ── Parallax glow on scroll
+    // ── Parallax glow
     gsap.to(glowRef.current, {
       y: -80,
       ease: "none",
@@ -84,7 +82,7 @@ export default function Hero() {
       },
     });
 
-    // ── Infinite Horizontal Wave for the main glowing blob
+    // ── Infinite Horizontal Wave for blob
     gsap.to(mainBlobRef.current, {
       x: "-60vw",
       duration: 5,
@@ -93,8 +91,21 @@ export default function Hero() {
       repeat: -1,
     });
 
+    // ── Infinite Marquee
+    if (marqueeRef.current) {
+      const marqueeContent = marqueeRef.current.children[0] as HTMLElement;
+      const totalWidth = marqueeContent.offsetWidth;
+
+      gsap.to(marqueeRef.current, {
+        x: dir === "rtl" ? totalWidth / 2 : -totalWidth / 2,
+        duration: 40,
+        ease: "none",
+        repeat: -1,
+      });
+    }
+
     ScrollTrigger.refresh();
-  }, { scope: sectionRef });
+  }, { scope: sectionRef, dependencies: [dir] });
 
   const ArrowIcon = dir === "rtl" ? ArrowLeft : ArrowRight;
 
@@ -110,39 +121,14 @@ export default function Hero() {
 
       {/* Wavy Background Layers at bottom */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Deepest slow wave */}
-        <svg
-          className="absolute bottom-[-20px] left-0 w-[200%] h-80 opacity-[0.15] animate-wave-slow"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-            fill="#F97316"
-          />
+        <svg className="absolute bottom-[-20px] left-0 w-[200%] h-80 opacity-[0.15] animate-wave-slow" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="#F97316" />
         </svg>
-        {/* Middle wave */}
-        <svg
-          className="absolute bottom-[-10px] left-[-30%] w-[200%] h-64 opacity-[0.12] animate-wave-mid"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-            fill="#F59E0B"
-            transform="scale(1, -1) translate(0, -120)"
-          />
+        <svg className="absolute bottom-[-10px] left-[-30%] w-[200%] h-64 opacity-[0.12] animate-wave-mid" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="#F59E0B" transform="scale(1, -1) translate(0, -120)" />
         </svg>
-        {/* Front fast wave */}
-        <svg
-          className="absolute bottom-0 left-[-50%] w-[200%] h-48 opacity-[0.08] animate-wave-fast"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-            fill="#F97316"
-          />
+        <svg className="absolute bottom-0 left-[-50%] w-[200%] h-48 opacity-[0.08] animate-wave-fast" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="#F97316" />
         </svg>
       </div>
 
@@ -152,12 +138,7 @@ export default function Hero() {
         {/* Text side */}
         <div className={`flex-1 flex flex-col ${dir === "rtl" ? "items-end text-right" : "items-start text-left"}`}>
           <div ref={headlineRef} className="flex flex-col gap-0">
-            {/* Pulse pill with orbiting border */}
-            <div
-              ref={pulsePillRef}
-              className={`pulse-pill-orbit inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 ${dir === "rtl" ? "self-end" : "self-start"}`}
-              style={{ background: "rgba(249,115,22,0.1)" }}
-            >
+            <div ref={pulsePillRef} className={`pulse-pill-orbit inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 ${dir === "rtl" ? "self-end" : "self-start"}`} style={{ background: "rgba(249,115,22,0.1)" }}>
               <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#F97316" }} />
               <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#F97316" }}>{dict.hero.pulse}</span>
             </div>
@@ -173,7 +154,6 @@ export default function Hero() {
               {dict.hero.subtitle}
             </p>
 
-            {/* CTA Buttons – slide in from left → right */}
             <div ref={btnGroupRef} className={`flex gap-4 mt-8 flex-wrap ${dir === "rtl" ? "justify-end" : "justify-start"}`}>
               <a href="#contact">
                 <button className={`btn-primary border-8 border-[#F97316] ${dir === "ltr" ? "flex-row-reverse" : ""}`}>
@@ -188,7 +168,6 @@ export default function Hero() {
               </a>
             </div>
 
-            {/* Trust badges */}
             <div className={`mt-8 flex items-center gap-4 md:gap-6 flex-wrap ${dir === "rtl" ? "justify-end" : "justify-start"}`}>
               {dict.hero.badges.map((b) => (
                 <div key={b} className="flex items-center gap-1.5 whitespace-nowrap">
@@ -199,11 +178,9 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Stats row – each card slides in from left → right */}
           <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-12 w-full">
             {dict.hero.stats.map((s) => (
-              <div key={s.label} className={`flex flex-col ${dir === "rtl" ? "items-end" : "items-start"} p-4 rounded-2xl`}
-                style={{ background: "#0E1118", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div key={s.label} className={`flex flex-col ${dir === "rtl" ? "items-end" : "items-start"} p-4 rounded-2xl`} style={{ background: "#0E1118", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <span className="text-2xl md:text-3xl font-black ember-text">{s.val}</span>
                 <span className={`text-[10px] md:text-xs mt-1 ${dir === "rtl" ? "text-right" : "text-left"}`} style={{ color: "#94A3B8" }}>{s.label}</span>
               </div>
@@ -211,25 +188,17 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Dashboard frame – slides in from left → right */}
+        {/* Dashboard frame */}
         <div className="w-full lg:w-[48%] relative flex-shrink-0" ref={frameRef}>
-          <div className="absolute inset-0 rounded-[2rem] blur-[60px] opacity-30 pointer-events-none animate-glow-wave"
-            style={{ background: "radial-gradient(ellipse, #F97316, #F59E0B, transparent 70%)" }} />
-
-          <div className="relative rounded-[2rem] overflow-hidden" style={{
-            background: "#0E1118",
-            border: "1px solid rgba(249,115,22,0.2)",
-            boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)"
-          }}>
-            <div className={`flex items-center justify-between px-5 py-4 border-b ${dir === "rtl" ? "" : "flex-row-reverse"}`}
-              style={{ borderColor: "rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.02)" }}>
+          <div className="absolute inset-0 rounded-[2rem] blur-[60px] opacity-30 pointer-events-none animate-glow-wave" style={{ background: "radial-gradient(ellipse, #F97316, #F59E0B, transparent 70%)" }} />
+          <div className="relative rounded-[2rem] overflow-hidden" style={{ background: "#0E1118", border: "1px solid rgba(249,115,22,0.2)", boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)" }}>
+            <div className={`flex items-center justify-between px-5 py-4 border-b ${dir === "rtl" ? "" : "flex-row-reverse"}`} style={{ borderColor: "rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.02)" }}>
               <div className="flex gap-2">
                 {["#ff5f57", "#febc2e", "#28c840"].map((c, i) => (
                   <div key={i} className="w-3 h-3 rounded-full" style={{ background: c }} />
                 ))}
               </div>
-              <div className="px-4 py-1.5 rounded-full text-xs font-mono flex items-center gap-2"
-                style={{ background: "rgba(255,255,255,0.04)", color: "#475569" }}>
+              <div className="px-4 py-1.5 rounded-full text-xs font-mono flex items-center gap-2" style={{ background: "rgba(255,255,255,0.04)", color: "#475569" }}>
                 <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#F97316" }} />
                 {dict.hero.dashboard.domain}
               </div>
@@ -257,13 +226,20 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Brands row */}
-      <div className="relative z-10 border-t px-6 md:px-12 py-6" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-        <div className={`max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4 ${dir === "rtl" ? "" : "flex-row-reverse"}`}>
-          <span className="text-xs uppercase tracking-widest" style={{ color: "#475569" }}>{dict.hero.clientsLabel}</span>
-          <div className="flex items-center gap-8 flex-wrap">
-            {CLIENTS.map((c) => (
-              <span key={c} className="text-sm font-bold opacity-25 hover:opacity-50 transition-opacity cursor-default">{c}</span>
+      {/* Brands row - Marquee */}
+      <div className="relative z-10 border-t py-12 overflow-hidden" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+        <div className="max-w-7xl mx-auto px-6 mb-6">
+          <span className="text-xs uppercase tracking-widest opacity-50 block text-center" style={{ color: "#94A3B8" }}>{dict.hero.clientsLabel}</span>
+        </div>
+        <div className="flex whitespace-nowrap" ref={marqueeRef}>
+          <div className="flex gap-16 items-center px-8">
+            {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt="Client Logo"
+                className="h-12 w-auto object-contain opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 transform"
+              />
             ))}
           </div>
         </div>
@@ -271,3 +247,4 @@ export default function Hero() {
     </section>
   );
 }
+
