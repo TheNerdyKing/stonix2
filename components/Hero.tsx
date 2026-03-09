@@ -226,29 +226,51 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Fade edges */}
+        {/* Marquee track — overflow hidden clips the scrolling row */}
         <div
-          className="relative overflow-hidden"
           style={{
+            overflow: "hidden",
             maskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
             WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)"
           }}
         >
-          <div className="flex w-max animate-marquee gap-6 py-4">
-            {[...CLIENT_LOGOS, ...CLIENT_LOGOS, ...CLIENT_LOGOS].map((src, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[200px] md:w-[260px]"
-              >
+          {/* Inner strip — two full copies, animates from 0 → -50% = one seamless loop */}
+          <div
+            style={{
+              display: "flex",
+              gap: "24px",
+              padding: "16px 0",
+              width: "max-content",
+              animation: "marquee-scroll 55s linear infinite",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.animationPlayState = "paused")}
+            onMouseLeave={e => (e.currentTarget.style.animationPlayState = "running")}
+          >
+            {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((src, i) => (
+              <div key={i} style={{ flexShrink: 0, width: "220px" }}>
                 <div
-                  className="h-[130px] md:h-[160px] rounded-3xl flex items-center justify-center p-3 shadow-lg transition-transform duration-300 hover:scale-105"
-                  style={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.07)" }}
+                  style={{
+                    height: "150px",
+                    borderRadius: "24px",
+                    background: "#ffffff",
+                    border: "1px solid rgba(0,0,0,0.07)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "12px",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                    transition: "transform 0.3s ease",
+                  }}
                 >
                   <img
                     src={src}
                     alt="Partner Brand"
-                    className="max-h-full max-w-full object-contain"
-                    style={{ maxHeight: "120px", width: "100%" }}
+                    style={{
+                      maxHeight: "126px",
+                      maxWidth: "100%",
+                      width: "100%",
+                      objectFit: "contain",
+                    }}
                   />
                 </div>
               </div>
@@ -256,6 +278,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
     </section>
   );
 }

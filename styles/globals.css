@@ -389,7 +389,7 @@ body {
   }
 
   100% {
-    transform: translateX(-33.3333%);
+    transform: translateX(-50%);
   }
 }
 
