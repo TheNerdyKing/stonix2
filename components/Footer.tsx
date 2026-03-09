@@ -31,7 +31,7 @@ export default function Footer() {
     <footer ref={footerRef} className="py-12 px-6 border-t border-white/5 bg-[#05060A]">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className={`flex flex-col ${dir === "rtl" ? "items-end text-right" : "items-start text-left"}`}>
-          <div className="text-2xl font-black text-white mb-2">STONIX<span className="text-orange-500">2</span></div>
+          <div className="text-2xl font-black text-white mb-2">STONIX</div>
           <p className="text-sm" style={{ color: "#475569" }}>{dict.footer.rights} &copy; {new Date().getFullYear()}</p>
         </div>
 
