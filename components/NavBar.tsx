@@ -22,7 +22,7 @@ export default function NavBar() {
 
   return (
     <div className="sticky top-0 z-50 w-full">
-      <nav className={`flex items-center justify-between px-6 md:px-12 py-2 bg-white/[0.03] backdrop-blur-[12px] border-b border-white/[0.08] ${dir === "ltr" ? "flex-row" : "flex-row-reverse"}`}>
+      <nav className={`flex items-center justify-between px-4 md:px-12 py-1.5 md:py-2 bg-white/[0.03] backdrop-blur-[12px] border-b border-white/[0.08] ${dir === "ltr" ? "flex-row" : "flex-row-reverse"}`}>
         <div className="flex items-center">
           <div className="relative bg-white rounded-xl px-2 py-1 shadow-md">
             <Image
@@ -30,7 +30,7 @@ export default function NavBar() {
               alt="STONIX – Results, Not Marketing"
               width={120}
               height={52}
-              className="object-contain"
+              className="object-contain w-24 md:w-[120px] h-auto"
               priority
             />
           </div>

@@ -99,7 +99,7 @@ export default function Hero() {
   const ArrowIcon = dir === "rtl" ? ArrowLeft : ArrowRight;
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex flex-col overflow-hidden" style={{ background: "#05060A" }}>
+    <section ref={sectionRef} className="relative min-h-screen flex flex-col overflow-x-clip" style={{ background: "#05060A" }}>
       {/* Background glows */}
       <div ref={glowRef} className="absolute inset-0 pointer-events-none">
         <div ref={mainBlobRef} className="absolute top-[-10%] right-[-10%] w-[900px] h-[900px] rounded-full opacity-60 mix-blend-screen"
