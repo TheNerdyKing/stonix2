@@ -275,6 +275,34 @@ export const dictionaries: Record<"he" | "en", DictItem> = {
                 },
                 {
                     type: "image",
+                    src: "/assets/IMG_9310.jpg",
+                    name: "מורן",
+                    role: "מנהלת קהילה",
+                    text: "המעטפת המקצועית של STONIX היא בדיוק מה שהיה חסר לנו."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9311.jpg",
+                    name: "איתי",
+                    role: "יזם טכנולוגי",
+                    text: "חדשנות ויצירתיות בכל פרט. מומלץ בחום."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9316.jpg",
+                    name: "נועה",
+                    role: "בעלת מותג לייף סטייל",
+                    text: "הקליפים שינו את פני העמוד שלנו."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9318.jpg",
+                    name: "גלעד",
+                    role: "בעלים, חברת הפקה",
+                    text: "איכות ללא פשרות. פשוט תענוג לעבוד יחד."
+                },
+                {
+                    type: "image",
                     src: "/assets/Untitled design (62).png",
                     name: "לקוח מרוצה",
                     role: "בעלת עסק",
@@ -301,6 +329,7 @@ export const dictionaries: Record<"he" | "en", DictItem> = {
                     role: "בעל מותג",
                     text: "תודה ענקית לעבודה המטורפת שלך!! היינו צריכים אחת כמוך שתעיף את העמוד שלנו באוויר, תודה יא מלכה!!"
                 }
+
             ]
         },
         pricing: {
@@ -630,6 +659,34 @@ export const dictionaries: Record<"he" | "en", DictItem> = {
                 },
                 {
                     type: "image",
+                    src: "/assets/IMG_9310.jpg",
+                    name: "Moran",
+                    role: "Community Manager",
+                    text: "The professional shell of STONIX is exactly what we were missing."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9311.jpg",
+                    name: "Itay",
+                    role: "Tech Entrepreneur",
+                    text: "Innovation and creativity in every detail. Highly recommended."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9316.jpg",
+                    name: "Noa",
+                    role: "Lifestyle Brand Owner",
+                    text: "The clips changed the face of our page."
+                },
+                {
+                    type: "image",
+                    src: "/assets/IMG_9318.jpg",
+                    name: "Gilad",
+                    role: "Production Company Owner",
+                    text: "Uncompromising quality. Just a pleasure to work together."
+                },
+                {
+                    type: "image",
                     src: "/assets/Untitled design (62).png",
                     name: "Happy Client",
                     role: "Business Owner",
@@ -654,7 +711,7 @@ export const dictionaries: Record<"he" | "en", DictItem> = {
                     src: "/assets/Untitled design (65).png",
                     name: "Happy Client",
                     role: "Brand Owner",
-                    text: "A huge thank you for your insane work!! We needed someone like you to blow up our page. You're a queen!!"
+                    text: "A huge thank thank you for your insane work!! We needed someone like you to blow up our page. You're a queen!!"
                 }
             ]
         },

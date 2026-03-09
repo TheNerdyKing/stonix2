@@ -66,68 +66,82 @@ export default function MediaTestimonials() {
                     </h2>
                 </div>
 
-                <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
-                    {displayedReviews.map((m, i) => (
-                        <div
-                            key={i}
-                            className="media-card group relative rounded-3xl overflow-hidden bg-[#0E1118] border border-white/5 shadow-xl transition-all duration-500 hover:border-orange-500/20 hover:scale-[1.05] cursor-pointer"
-                            onClick={() => {
-                                if (m.type === "video") {
-                                    setActiveVideo(m.src);
-                                } else {
-                                    setActiveImage({ src: m.src, name: m.name });
-                                }
-                            }}
-                        >
-                            <div className="relative aspect-[4/5] w-full overflow-hidden">
-                                {m.type === "image" ? (
-                                    <Image
-                                        src={m.src}
-                                        alt={m.name}
-                                        fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                    />
-                                ) : (
-                                    <div className="relative w-full h-full">
-                                        <Image
-                                            src={m.thumbnail || "/assets/IMG_9310.jpg"}
-                                            alt={m.name}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-colors z-10">
-                                            <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center shadow-lg transform transition-transform group-hover:scale-110">
-                                                <Play className="w-5 h-5 text-black fill-current ml-0.5" />
+                <div className="relative group">
+                    <div
+                        ref={gridRef}
+                        className="flex overflow-x-auto gap-6 pb-12 no-scrollbar snap-x snap-mandatory scroll-smooth"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
+                        {dict.testimonials.mediaReviews.map((m, i) => (
+                            <div
+                                key={i}
+                                className="media-card flex-shrink-0 w-[280px] md:w-[350px] snap-start"
+                                onClick={() => {
+                                    if (m.type === "video") {
+                                        setActiveVideo(m.src);
+                                    } else {
+                                        setActiveImage({ src: m.src, name: m.name });
+                                    }
+                                }}
+                            >
+                                <div className="group relative rounded-[2.5rem] overflow-hidden bg-[#0E1118] border border-white/5 shadow-2xl transition-all duration-500 hover:border-orange-500/20 hover:scale-[1.02] cursor-pointer">
+                                    <div className="relative aspect-[4/5] w-full overflow-hidden">
+                                        {m.type === "image" ? (
+                                            <Image
+                                                src={m.src}
+                                                alt={m.name}
+                                                fill
+                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                            />
+                                        ) : (
+                                            <div className="relative w-full h-full">
+                                                <Image
+                                                    src={m.thumbnail || "/assets/IMG_9310.jpg"}
+                                                    alt={m.name}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-colors z-10">
+                                                    <div className="w-14 h-14 rounded-full bg-orange-500 flex items-center justify-center shadow-2xl transform transition-transform group-hover:scale-110">
+                                                        <Play className="w-6 h-6 text-black fill-current ml-0.5" />
+                                                    </div>
+                                                </div>
                                             </div>
+                                        )}
+                                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 z-0" />
+                                        <div className={`absolute bottom-6 left-6 right-6 ${dir === "rtl" ? "text-right" : "text-left"} z-10`}>
+                                            <div className="mb-2 inline-block px-2 py-1 rounded bg-orange-500/20 backdrop-blur-md border border-orange-500/20">
+                                                <span className="text-[10px] font-bold uppercase tracking-widest text-orange-500">
+                                                    {m.type === "video" ? (language === 'he' ? 'וידאו' : 'VIDEO') : (language === 'he' ? 'צילום מסך' : 'SCREENSHOT')}
+                                                </span>
+                                            </div>
+                                            <p className="text-white text-lg font-black leading-tight mb-1">{m.name}</p>
+                                            <p className="text-xs font-medium opacity-60" style={{ color: "#94A3B8" }}>{m.role}</p>
+                                            <p className="mt-3 text-xs leading-relaxed line-clamp-2 text-white/70 italic">"{m.text}"</p>
                                         </div>
                                     </div>
-                                )}
-                                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0E1118] to-transparent opacity-80 z-0" />
-                                <div className={`absolute bottom-3 left-3 right-3 ${dir === "rtl" ? "text-right" : "text-left"} z-10`}>
-                                    <p className="text-white text-xs font-bold truncate">{m.name}</p>
-                                    <p className="text-[10px] truncate" style={{ color: "#94A3B8" }}>{m.role}</p>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
 
-                {/* Show More Button */}
-                {dict.testimonials.mediaReviews.length > 5 && (
-                    <div className="flex justify-center mt-12">
+                    {/* Navigation Overlays */}
+                    <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none flex justify-between px-4 z-20">
                         <button
-                            onClick={() => setShowAll(!showAll)}
-                            className="btn-ghost px-10 py-4 text-lg group relative overflow-hidden"
+                            onClick={() => gridRef.current?.scrollBy({ left: -400, behavior: 'smooth' })}
+                            className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto hover:bg-orange-500 hover:border-orange-500 transition-all opacity-0 group-hover:opacity-100"
                         >
-                            <span className="relative z-10">
-                                {showAll
-                                    ? (language === 'he' ? 'הצג פחות' : 'Show Less')
-                                    : (language === 'he' ? 'הצג עוד המלצות' : 'See More Testimonials')}
-                            </span>
-                            <div className="absolute inset-0 bg-orange-500/5 scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full" />
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                        </button>
+                        <button
+                            onClick={() => gridRef.current?.scrollBy({ left: 400, behavior: 'smooth' })}
+                            className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto hover:bg-orange-500 hover:border-orange-500 transition-all opacity-0 group-hover:opacity-100"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                         </button>
                     </div>
-                )}
+                </div>
+
 
                 {/* Image Lightbox */}
                 {activeImage && (
