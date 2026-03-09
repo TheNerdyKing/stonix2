@@ -26,11 +26,11 @@ export default function NavBar() {
         <div className="flex items-center">
           <div className="relative flex items-center justify-center">
             <Image
-              src="/logo-black-1.png"
+              src="/logo-new.jpg"
               alt="STONIX – Results, Not Marketing"
               width={160}
-              height={200}
-              className="object-contain w-28 md:w-[140px] max-h-[50px] md:max-h-[65px] h-auto mix-blend-lighten"
+              height={160}
+              className="object-contain w-32 md:w-[150px] max-h-[50px] md:max-h-[65px] h-auto mix-blend-lighten"
               priority
             />
           </div>
