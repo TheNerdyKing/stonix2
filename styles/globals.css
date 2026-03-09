@@ -383,6 +383,16 @@ body {
   }
 }
 
+@keyframes marquee-scroll-rtl {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(50%);
+  }
+}
+
 .animate-marquee {
   animation: marquee-scroll 55s linear infinite;
 }

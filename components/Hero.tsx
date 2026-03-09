@@ -241,7 +241,7 @@ export default function Hero() {
               gap: "24px",
               padding: "16px 0",
               width: "max-content",
-              animation: "marquee-scroll 55s linear infinite",
+              animation: `marquee-scroll${dir === "rtl" ? "-rtl" : ""} 55s linear infinite`,
             }}
             onMouseEnter={e => (e.currentTarget.style.animationPlayState = "paused")}
             onMouseLeave={e => (e.currentTarget.style.animationPlayState = "running")}
