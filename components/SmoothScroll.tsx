@@ -22,21 +22,30 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    // Define the raf handler once for safe cleanup
+    const onTicker = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
 
+    gsap.ticker.add(onTicker);
     gsap.ticker.lagSmoothing(0);
 
-    // Refresh ScrollTrigger after a short delay to ensure DOM is settled
+    // Initial sync
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 500);
+    }, 100);
+
+    // Watch for actual size changes (images loading dynamically, accordion toggles, etc.)
+    const resizeObserver = new ResizeObserver(() => {
+      ScrollTrigger.refresh();
+    });
+    resizeObserver.observe(document.body);
 
     return () => {
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf as any);
+      gsap.ticker.remove(onTicker);
       clearTimeout(timer);
+      resizeObserver.disconnect();
     };
   }, []);
 

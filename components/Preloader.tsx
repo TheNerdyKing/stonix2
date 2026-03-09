@@ -3,7 +3,7 @@
 import { useRef, useState, useLayoutEffect } from "react";
 
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap, ScrollTrigger, refreshScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 
 interface PreloaderProps {
@@ -19,7 +19,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   useLayoutEffect(() => {
     const seenIntro = localStorage.getItem("seenIntro");
     if (seenIntro || prefersReducedMotion()) {
-      onComplete();
+      onComplete(); refreshScrollTrigger();
     } else {
       setShouldAnimate(true);
     }
@@ -34,7 +34,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         gsap.to(containerRef.current, {
           opacity: 0,
           duration: 0.3,
-          onComplete,
+          onComplete: () => { onComplete(); refreshScrollTrigger(); },
         });
       },
     });
@@ -52,7 +52,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
   const handleSkip = () => {
     localStorage.setItem("seenIntro", "true");
-    onComplete();
+    onComplete(); refreshScrollTrigger();
   };
 
   // Prevent flashing of preloader content before the layout effect fires

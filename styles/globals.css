@@ -24,13 +24,14 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Removed scroll-behavior: smooth to prevent conflict with Lenis */
+  height: auto;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -156,4 +157,218 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ===== PRICING – ORBITING BORDER BEAM ===== */
+@keyframes orbit-border {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.popular-border-orbit {
+  position: relative;
+}
+
+.popular-border-orbit::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 2rem;
+  padding: 2px;
+  background: conic-gradient(from 0deg,
+      transparent 0%,
+      transparent 30%,
+      #F97316 50%,
+      #FDBA74 60%,
+      transparent 70%,
+      transparent 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: orbit-border 3s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== HERO – PULSE PILL ORBITING BORDER ===== */
+.pulse-pill-orbit {
+  position: relative;
+  isolation: isolate;
+}
+
+.pulse-pill-orbit::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 9999px;
+  padding: 1.5px;
+  background: conic-gradient(from 0deg,
+      transparent 0%,
+      transparent 30%,
+      #F97316 50%,
+      #FBBF24 62%,
+      transparent 72%,
+      transparent 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: orbit-border 2s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ===== WATER-WAVE SHIMMER – SHARED ===== */
+@keyframes wave-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ===== FRAME GLOW ANIMATION ===== */
+@keyframes float-x {
+  0% {
+    transform: scale(1.2) translateX(-15%);
+  }
+
+  50% {
+    transform: scale(1.2) translateX(15%);
+  }
+
+  100% {
+    transform: scale(1.2) translateX(-15%);
+  }
+}
+
+.animate-glow-wave {
+  animation: float-x 8s ease-in-out infinite;
+}
+
+@keyframes hero-bg-wave {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-hero-bg-wave {
+  animation: hero-bg-wave 8s ease-in-out infinite;
+}
+
+@keyframes wave-motion {
+  0% {
+    transform: translateX(0) scaleY(1);
+  }
+
+  50% {
+    transform: translateX(-15%) scaleY(1.2);
+  }
+
+  100% {
+    transform: translateX(0) scaleY(1);
+  }
+}
+
+.animate-wave-slow {
+  animation: wave-motion 15s ease-in-out infinite;
+}
+
+.animate-wave-mid {
+  animation: wave-motion 10s ease-in-out infinite;
+}
+
+.animate-wave-fast {
+  animation: wave-motion 7s ease-in-out infinite;
+}
+
+/* Pricing – popular card button */
+.wave-btn {
+  background: linear-gradient(90deg,
+      #F97316,
+      #FDBA74,
+      #F97316,
+      #EA580C,
+      #FDBA74,
+      #F97316);
+  background-size: 300% 300%;
+  animation: wave-shift 2.5s ease infinite;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.wave-btn:hover {
+  box-shadow: 0 0 40px rgba(249, 115, 22, 0.55);
+  transform: translateY(-1px);
+}
+
+/* FinalCTA – main CTA button */
+.cta-wave-bg {
+  background: linear-gradient(270deg,
+      #F97316,
+      #EA580C,
+      #9A3412,
+      #EA580C,
+      #F97316,
+      #FDBA74,
+      #F97316);
+  background-size: 400% 400%;
+  animation: wave-shift 4s ease infinite;
+}
+
+/* FinalCTA – mock widget button */
+.wave-btn-inner {
+  background: linear-gradient(90deg,
+      #F97316,
+      #FDBA74,
+      #F97316,
+      #EA580C,
+      #F97316);
+  background-size: 300% 300%;
+  animation: wave-shift 3s ease infinite;
+}
+
+/* ===== FAQ ACCORDION – CHEVRON + BORDER STATES ===== */
+#faq [data-state="open"] button>svg {
+  color: #F97316;
+}
+
+#faq [data-state="closed"] button>svg {
+  color: #94A3B8;
+}
+
+#faq .faq-item-inner {
+  background: rgba(14, 17, 24, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+#faq [data-state="open"] .faq-item-inner {
+  background: #0E1118;
+  border-color: rgba(249, 115, 22, 0.25);
+}
+
+#faq button:hover {
+  text-decoration: none !important;
 }

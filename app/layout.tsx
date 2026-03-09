@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { GSAPInitializer } from "@/components/GSAPInitializer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,6 +34,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased" style={{ background: "#05060A", color: "#F8FAFC", fontFamily: "'Heebo', sans-serif" }}>
         <LanguageProvider>
+          <GSAPInitializer />
           <SmoothScroll>
             {children}
           </SmoothScroll>

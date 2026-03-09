@@ -21,30 +21,58 @@ export default function Hero() {
   const statsRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const mainBlobRef = useRef<HTMLDivElement>(null);
+  const pulsePillRef = useRef<HTMLDivElement>(null);
+  const btnGroupRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (prefersReducedMotion()) {
-      gsap.set([headlineRef.current, statsRef.current, frameRef.current], { opacity: 1, y: 0 });
+      gsap.set(
+        [headlineRef.current, statsRef.current, frameRef.current, btnGroupRef.current],
+        { opacity: 1, x: 0, y: 0 }
+      );
       return;
     }
 
-    const tl = gsap.timeline({ delay: 0.1 });
+    const tl = gsap.timeline({
+      delay: 0.2, // Small delay to ensure hydration/DOM transition is complete
+    });
 
-    tl.fromTo(headlineRef.current?.children || [],
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power3.out" }
-    );
-    tl.fromTo(statsRef.current?.children || [],
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power2.out" },
+    // ── Headline: fade + slide-up
+    const headlineItems = headlineRef.current?.children;
+    if (headlineItems) {
+      tl.fromTo(
+        headlineItems,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.75, stagger: 0.1, ease: "power3.out" }
+      );
+    }
+
+    // ── Buttons: slide in from left → right, staggered
+    tl.fromTo(
+      btnGroupRef.current?.children || [],
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.55, stagger: 0.15, ease: "power2.out" },
       "-=0.3"
     );
-    tl.fromTo(frameRef.current,
-      { opacity: 0, y: 50, scale: 0.96 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "expo.out" },
-      "-=0.5"
+
+    // ── Stats cards: slide in from left → right, staggered
+    tl.fromTo(
+      statsRef.current?.children || [],
+      { opacity: 0, x: -60 },
+      { opacity: 1, x: 0, duration: 0.55, stagger: 0.1, ease: "power2.out" },
+      "-=0.25"
     );
 
+    // ── Dashboard frame: slide in from left → right
+    tl.fromTo(
+      frameRef.current,
+      { opacity: 0, x: -90, scale: 0.96 },
+      { opacity: 1, x: 0, scale: 1, duration: 1, ease: "expo.out" },
+      "-=0.55"
+    );
+
+    // ── Parallax glow on scroll
     gsap.to(glowRef.current, {
       y: -80,
       ease: "none",
@@ -55,6 +83,16 @@ export default function Hero() {
         scrub: 1.5,
       },
     });
+
+    // ── Infinite Horizontal Wave for the main glowing blob
+    gsap.to(mainBlobRef.current, {
+      x: "-60vw",
+      duration: 5,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+
     ScrollTrigger.refresh();
   }, { scope: sectionRef });
 
@@ -62,42 +100,50 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex flex-col overflow-hidden" style={{ background: "#05060A" }}>
-      {/* Nav */}
-      <nav className={`relative z-50 flex items-center justify-between px-6 md:px-12 py-5 ${dir === "rtl" ? "flex-row" : "flex-row-reverse"}`}>
-        <a href="#contact">
-          <button className="btn-primary px-5 py-2.5 text-sm">
-            {dict.nav.call}
-          </button>
-        </a>
-        <div className="hidden md:flex items-center gap-8">
-          {[
-            { href: "#services", label: dict.nav.services },
-            { href: "#results", label: dict.nav.results },
-            { href: "#testimonials", label: dict.nav.testimonials },
-            { href: "#contact", label: dict.nav.contact },
-          ].map((l) => (
-            <a key={l.href} href={l.href}
-              className="text-sm font-medium transition-colors"
-              style={{ color: "#94A3B8" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#F8FAFC")}
-              onMouseLeave={e => (e.currentTarget.style.color = "#94A3B8")}
-            >
-              {l.label}
-            </a>
-          ))}
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="font-black text-lg tracking-tight text-white">STONIX</span>
-          <img src="/logo.png" alt="Stonix Logo" className="w-10 h-10 rounded-xl" />
-        </div>
-      </nav>
-
       {/* Background glows */}
       <div ref={glowRef} className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[50%] -translate-x-1/2 w-[700px] h-[700px] rounded-full opacity-20"
-          style={{ background: "radial-gradient(circle, #F97316, transparent 70%)", filter: "blur(80px)" }} />
+        <div ref={mainBlobRef} className="absolute top-[-10%] right-[-10%] w-[900px] h-[900px] rounded-full opacity-60 mix-blend-screen"
+          style={{ background: "radial-gradient(circle, #F97316, transparent 65%)", filter: "blur(90px)" }} />
         <div className="absolute top-[40%] right-[-5%] w-[400px] h-[400px] rounded-full opacity-10"
           style={{ background: "radial-gradient(circle, #A78BFA, transparent 70%)", filter: "blur(60px)" }} />
+      </div>
+
+      {/* Wavy Background Layers at bottom */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* Deepest slow wave */}
+        <svg
+          className="absolute bottom-[-20px] left-0 w-[200%] h-80 opacity-[0.15] animate-wave-slow"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+            fill="#F97316"
+          />
+        </svg>
+        {/* Middle wave */}
+        <svg
+          className="absolute bottom-[-10px] left-[-30%] w-[200%] h-64 opacity-[0.12] animate-wave-mid"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+            fill="#F59E0B"
+            transform="scale(1, -1) translate(0, -120)"
+          />
+        </svg>
+        {/* Front fast wave */}
+        <svg
+          className="absolute bottom-0 left-[-50%] w-[200%] h-48 opacity-[0.08] animate-wave-fast"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+            fill="#F97316"
+          />
+        </svg>
       </div>
 
       {/* Main content */}
@@ -106,8 +152,12 @@ export default function Hero() {
         {/* Text side */}
         <div className={`flex-1 flex flex-col ${dir === "rtl" ? "items-end text-right" : "items-start text-left"}`}>
           <div ref={headlineRef} className="flex flex-col gap-0">
-            <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 ${dir === "rtl" ? "self-end" : "self-start"}`}
-              style={{ background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.25)" }}>
+            {/* Pulse pill with orbiting border */}
+            <div
+              ref={pulsePillRef}
+              className={`pulse-pill-orbit inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 ${dir === "rtl" ? "self-end" : "self-start"}`}
+              style={{ background: "rgba(249,115,22,0.1)" }}
+            >
               <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#F97316" }} />
               <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#F97316" }}>{dict.hero.pulse}</span>
             </div>
@@ -123,9 +173,10 @@ export default function Hero() {
               {dict.hero.subtitle}
             </p>
 
-            <div className={`flex gap-4 mt-8 flex-wrap ${dir === "rtl" ? "justify-end" : "justify-start"}`}>
+            {/* CTA Buttons – slide in from left → right */}
+            <div ref={btnGroupRef} className={`flex gap-4 mt-8 flex-wrap ${dir === "rtl" ? "justify-end" : "justify-start"}`}>
               <a href="#contact">
-                <button className={`btn-primary ${dir === "ltr" ? "flex-row-reverse" : ""}`}>
+                <button className={`btn-primary border-8 border-[#F97316] ${dir === "ltr" ? "flex-row-reverse" : ""}`}>
                   {dict.hero.ctaPrimary}
                   <ArrowIcon className="w-4 h-4" />
                 </button>
@@ -148,7 +199,7 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Stats row */}
+          {/* Stats row – each card slides in from left → right */}
           <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-12 w-full">
             {dict.hero.stats.map((s) => (
               <div key={s.label} className={`flex flex-col ${dir === "rtl" ? "items-end" : "items-start"} p-4 rounded-2xl`}
@@ -160,10 +211,10 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Dashboard frame */}
+        {/* Dashboard frame – slides in from left → right */}
         <div className="w-full lg:w-[48%] relative flex-shrink-0" ref={frameRef}>
-          <div className="absolute inset-0 rounded-[2rem] blur-[60px] opacity-30 pointer-events-none"
-            style={{ background: "radial-gradient(ellipse, #F97316, #F59E0B, transparent 70%)", transform: "scale(1.2)" }} />
+          <div className="absolute inset-0 rounded-[2rem] blur-[60px] opacity-30 pointer-events-none animate-glow-wave"
+            style={{ background: "radial-gradient(ellipse, #F97316, #F59E0B, transparent 70%)" }} />
 
           <div className="relative rounded-[2rem] overflow-hidden" style={{
             background: "#0E1118",

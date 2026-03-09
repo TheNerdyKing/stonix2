@@ -1,16 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-
-
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 import { Star, Quote } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 import { getDictionary } from "@/lib/i18n";
-
-
 
 export default function Testimonials() {
     const { language, dir } = useLanguage();
@@ -23,25 +19,28 @@ export default function Testimonials() {
     useGSAP(() => {
         if (prefersReducedMotion()) return;
 
+        // Title: staggered "generating" reveal
         gsap.fromTo(titleRef.current?.children || [],
-            { opacity: 0, y: 30 },
+            { opacity: 0, y: 35 },
             {
-                opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+                opacity: 1, y: 0, duration: 0.75, stagger: 0.12, ease: "power3.out",
                 scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
             }
         );
 
+        // Testimonial cards: slide in from left → right, staggered
         const cards = cardsRef.current?.querySelectorAll(".testi-card");
         cards?.forEach((card, i) => {
             gsap.fromTo(card,
-                { opacity: 0, y: 40, scale: 0.97 },
+                { opacity: 0, x: -65 },
                 {
-                    opacity: 1, y: 0, scale: 1, duration: 0.65, ease: "expo.out",
+                    opacity: 1, x: 0, duration: 0.75, ease: "expo.out",
                     scrollTrigger: { trigger: cardsRef.current, start: "top 85%" },
-                    delay: i * 0.12,
+                    delay: i * 0.13,
                 }
             );
         });
+
         ScrollTrigger.refresh();
     }, { scope: sectionRef });
 

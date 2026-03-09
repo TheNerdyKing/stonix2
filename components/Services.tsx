@@ -1,15 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-
-
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 import { Search, Target, Palette, BarChart3, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 import { getDictionary } from "@/lib/i18n";
-
 
 export default function Services() {
     const { language, dir } = useLanguage();
@@ -22,25 +19,28 @@ export default function Services() {
     useGSAP(() => {
         if (prefersReducedMotion()) return;
 
+        // Title: staggered "generating" reveal
         gsap.fromTo(titleRef.current?.children || [],
-            { opacity: 0, y: 30 },
+            { opacity: 0, y: 35 },
             {
-                opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+                opacity: 1, y: 0, duration: 0.75, stagger: 0.12, ease: "power3.out",
                 scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
             }
         );
 
+        // Service cards: slide in from left → right, staggered
         const cards = cardsRef.current?.querySelectorAll(".service-card");
         cards?.forEach((card, i) => {
             gsap.fromTo(card,
-                { opacity: 0, y: 40 },
+                { opacity: 0, x: -70 },
                 {
-                    opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
-                    scrollTrigger: { trigger: card, start: "top 85%" },
-                    delay: i * 0.08,
+                    opacity: 1, x: 0, duration: 0.75, ease: "expo.out",
+                    scrollTrigger: { trigger: card, start: "top 87%" },
+                    delay: i * 0.1,
                 }
             );
         });
+
         ScrollTrigger.refresh();
     }, { scope: sectionRef });
 

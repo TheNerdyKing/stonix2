@@ -18,3 +18,11 @@ export function initGSAP() {
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ limitCallbacks: true });
 }
+
+export function refreshScrollTrigger() {
+  if (typeof window === "undefined") return;
+  // Use a slight timeout so DOM renders first
+  setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 100);
+}

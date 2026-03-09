@@ -14,10 +14,12 @@ import FinalCTA from "@/components/FinalCTA";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import NavBar from "@/components/NavBar";
 
 export default function Home() {
   return (
     <main>
+      <NavBar />
       <Hero />
       <About />
       <BentoCards />

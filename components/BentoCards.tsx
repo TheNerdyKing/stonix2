@@ -1,16 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-
-
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 import { TrendingUp, Target, Zap, Award } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 import { getDictionary } from "@/lib/i18n";
-
-
 
 export default function BentoCards() {
   const { language, dir } = useLanguage();
@@ -23,19 +19,19 @@ export default function BentoCards() {
   useGSAP(() => {
     if (prefersReducedMotion()) return;
 
+    // Both cards slide in from left → right, staggered
     gsap.fromTo(
       [leftCardRef.current, rightCardRef.current],
-      { y: 60, opacity: 0 },
+      { x: -80, opacity: 0 },
       {
-        y: 0,
+        x: 0,
         opacity: 1,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out",
+        duration: 0.9,
+        stagger: 0.18,
+        ease: "expo.out",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none reverse",
+          start: "top 75%",
         },
       }
     );

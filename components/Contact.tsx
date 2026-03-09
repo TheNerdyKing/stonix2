@@ -14,18 +14,41 @@ export default function Contact() {
 
     const sectionRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLDivElement>(null);
+    const infoColRef = useRef<HTMLDivElement>(null);
+    const formColRef = useRef<HTMLDivElement>(null);
     const [submitted, setSubmitted] = useState(false);
 
     useGSAP(() => {
         if (prefersReducedMotion()) return;
 
+        // Title: staggered "generating" reveal
         gsap.fromTo(titleRef.current?.children || [],
-            { opacity: 0, y: 30 },
+            { opacity: 0, y: 35 },
             {
-                opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+                opacity: 1, y: 0, duration: 0.75, stagger: 0.12, ease: "power3.out",
                 scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
             }
         );
+
+        // Info column: slide in from left → right
+        gsap.fromTo(infoColRef.current?.children || [],
+            { opacity: 0, x: -60 },
+            {
+                opacity: 1, x: 0, duration: 0.75, stagger: 0.1, ease: "expo.out",
+                scrollTrigger: { trigger: infoColRef.current, start: "top 83%" }
+            }
+        );
+
+        // Form column: slide in from left → right (slight delay)
+        gsap.fromTo(formColRef.current,
+            { opacity: 0, x: -70 },
+            {
+                opacity: 1, x: 0, duration: 0.85, ease: "expo.out",
+                scrollTrigger: { trigger: formColRef.current, start: "top 83%" },
+                delay: 0.15,
+            }
+        );
+
         ScrollTrigger.refresh();
     }, { scope: sectionRef });
 
@@ -53,7 +76,7 @@ export default function Contact() {
                 <div className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-start ${dir === "rtl" ? "" : "lg:flex-row-reverse"}`}>
 
                     {/* Info Column */}
-                    <div className={`flex flex-col gap-4 md:gap-6 ${dir === "rtl" ? "items-end text-right" : "items-start text-left"}`}>
+                    <div ref={infoColRef} className={`flex flex-col gap-4 md:gap-6 ${dir === "rtl" ? "items-end text-right" : "items-start text-left"}`}>
                         {contactInfo.map((item, i) => (
                             <div key={i} className={`flex items-center gap-4 p-5 md:p-6 rounded-2xl md:rounded-3xl w-full ${dir === "rtl" ? "flex-row-reverse" : ""}`}
                                 style={{ background: "rgba(14,17,24,0.6)", border: "1px solid rgba(255,255,255,0.06)" }}>
@@ -79,7 +102,7 @@ export default function Contact() {
                     </div>
 
                     {/* Form Column */}
-                    <div className="p-6 md:p-12 rounded-2xl md:rounded-[2.5rem]" style={{ background: "#0E1118", border: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div ref={formColRef} className="p-6 md:p-12 rounded-2xl md:rounded-[2.5rem]" style={{ background: "#0E1118", border: "1px solid rgba(255,255,255,0.08)" }}>
                         {!submitted ? (
                             <form className="flex flex-col gap-6" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
                                 <div className={`grid md:grid-cols-2 gap-6`}>

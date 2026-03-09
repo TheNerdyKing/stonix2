@@ -18,25 +18,28 @@ export default function Methodology() {
     useGSAP(() => {
         if (prefersReducedMotion()) return;
 
+        // Title: staggered "generating" fade-up
         gsap.fromTo(titleRef.current?.children || [],
-            { opacity: 0, y: 30 },
+            { opacity: 0, y: 35 },
             {
-                opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+                opacity: 1, y: 0, duration: 0.75, stagger: 0.12, ease: "power3.out",
                 scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
             }
         );
 
+        // Step cards: slide in from left → right, staggered
         const steps = stepsRef.current?.querySelectorAll(".step-card");
         steps?.forEach((step, i) => {
             gsap.fromTo(step,
-                { opacity: 0, x: dir === "rtl" ? 50 : -50 },
+                { opacity: 0, x: -65 },
                 {
                     opacity: 1, x: 0, duration: 0.8, ease: "expo.out",
-                    scrollTrigger: { trigger: step, start: "top 85%" },
-                    delay: i * 0.1,
+                    scrollTrigger: { trigger: stepsRef.current, start: "top 85%" },
+                    delay: i * 0.12,
                 }
             );
         });
+
         ScrollTrigger.refresh();
     }, { scope: sectionRef });
 

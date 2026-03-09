@@ -1,15 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-
-
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
 import { TrendingUp } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
 import { getDictionary } from "@/lib/i18n";
-
 
 export default function Results() {
     const { language, dir } = useLanguage();
@@ -21,25 +18,28 @@ export default function Results() {
     useGSAP(() => {
         if (prefersReducedMotion()) return;
 
+        // Title: staggered "generating" reveal
         gsap.fromTo(titleRef.current?.children || [],
-            { opacity: 0, y: 30 },
+            { opacity: 0, y: 35 },
             {
-                opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+                opacity: 1, y: 0, duration: 0.75, stagger: 0.12, ease: "power3.out",
                 scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
             }
         );
 
+        // Case cards: slide in from left → right, staggered
         const cards = sectionRef.current?.querySelectorAll(".case-card");
         cards?.forEach((card, i) => {
             gsap.fromTo(card,
-                { opacity: 0, y: 50 },
+                { opacity: 0, x: -70 },
                 {
-                    opacity: 1, y: 0, duration: 0.7, ease: "expo.out",
+                    opacity: 1, x: 0, duration: 0.8, ease: "expo.out",
                     scrollTrigger: { trigger: card, start: "top 90%" },
-                    delay: i * 0.1,
+                    delay: i * 0.08,
                 }
             );
         });
+
         ScrollTrigger.refresh();
     }, { scope: sectionRef });
 

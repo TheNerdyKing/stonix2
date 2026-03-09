@@ -1,14 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
-
-
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/gsap";
-import { Plus, Minus } from "lucide-react";
-
-
+import {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+} from "@/components/ui/accordion";
 
 const FAQ_ITEMS = [
     {
@@ -38,62 +39,111 @@ const FAQ_ITEMS = [
 ];
 
 export default function FAQ() {
-    const [open, setOpen] = useState<number | null>(null);
     const sectionRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLDivElement>(null);
+    const accordionRef = useRef<HTMLDivElement>(null);
 
-    useGSAP(() => {
-        if (prefersReducedMotion()) return;
-        gsap.fromTo(titleRef.current?.children || [],
-            { opacity: 0, y: 30 },
-            {
-                opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
-                scrollTrigger: { trigger: titleRef.current, start: "top 80%" }
-            }
-        );
-      ScrollTrigger.refresh();
-  }, { scope: sectionRef });
+    useGSAP(
+        () => {
+            if (prefersReducedMotion()) return;
+
+            // Title: staggered "generating" reveal
+            gsap.fromTo(
+                titleRef.current?.children || [],
+                { opacity: 0, y: 35 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.75,
+                    stagger: 0.12,
+                    ease: "power3.out",
+                    scrollTrigger: { trigger: titleRef.current, start: "top 80%" },
+                }
+            );
+
+            // FAQ accordion items: slide in from left → right, staggered
+            const items = accordionRef.current?.querySelectorAll(".faq-item");
+            items?.forEach((item, i) => {
+                gsap.fromTo(item,
+                    { opacity: 0, x: -60 },
+                    {
+                        opacity: 1, x: 0, duration: 0.7, ease: "expo.out",
+                        scrollTrigger: { trigger: accordionRef.current, start: "top 85%" },
+                        delay: i * 0.08,
+                    }
+                );
+            });
+
+            ScrollTrigger.refresh();
+        },
+        { scope: sectionRef }
+    );
 
     return (
-        <section ref={sectionRef} id="faq" className="section-pad" style={{ background: "#05060A", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <section
+            ref={sectionRef}
+            id="faq"
+            className="section-pad"
+            style={{
+                background: "#05060A",
+                borderTop: "1px solid rgba(255,255,255,0.05)",
+            }}
+        >
             <div className="max-w-4xl mx-auto">
-
-                <div ref={titleRef} className="text-right mb-16 flex flex-col items-end">
-                    <p className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: "#F97316" }}>שאלות נפוצות</p>
-                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white">יש לכם שאלות?</h2>
-                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter ember-text">יש לנו תשובות.</h2>
+                {/* Section Header */}
+                <div
+                    ref={titleRef}
+                    className="text-right mb-16 flex flex-col items-end"
+                >
+                    <p
+                        className="text-xs font-bold uppercase tracking-[0.3em] mb-4"
+                        style={{ color: "#F97316" }}
+                    >
+                        שאלות נפוצות
+                    </p>
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white">
+                        יש לכם שאלות?
+                    </h2>
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter ember-text">
+                        יש לנו תשובות.
+                    </h2>
                 </div>
 
-                <div className="flex flex-col gap-3">
-                    {FAQ_ITEMS.map((item, i) => (
-                        <div key={i} className="rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer"
-                            style={{
-                                background: open === i ? "#0E1118" : "rgba(14,17,24,0.5)",
-                                border: open === i ? "1px solid rgba(249,115,22,0.25)" : "1px solid rgba(255,255,255,0.06)",
-                            }}
-                            onClick={() => setOpen(open === i ? null : i)}>
+                {/* Shadcn-style Accordion */}
+                <div ref={accordionRef}>
+                    <Accordion
+                        type="single"
+                        collapsible
+                        className="flex flex-col gap-3"
+                    >
+                        {FAQ_ITEMS.map((item, i) => (
+                            <AccordionItem
+                                key={i}
+                                value={`item-${i}`}
+                                className="faq-item rounded-2xl overflow-hidden border-0"
+                            >
+                                <div className="faq-item-inner rounded-2xl overflow-hidden">
+                                    <AccordionTrigger
+                                        className="w-full px-6 py-5 flex flex-row-reverse items-center justify-between gap-4"
+                                    >
+                                        <h3 className="text-right font-bold text-white flex-1 text-base md:text-lg leading-snug">
+                                            {item.q}
+                                        </h3>
+                                    </AccordionTrigger>
 
-                            <div className="flex items-center justify-between p-6">
-                                <div style={{ color: open === i ? "#F97316" : "#94A3B8", transition: "color 0.2s" }}>
-                                    {open === i
-                                        ? <Minus className="w-5 h-5" />
-                                        : <Plus className="w-5 h-5" />
-                                    }
+                                    <AccordionContent
+                                        className="px-6 pb-6 text-right leading-relaxed"
+                                        style={{ color: "#94A3B8" }}
+                                    >
+                                        {item.a}
+                                    </AccordionContent>
                                 </div>
-                                <h3 className="text-right font-bold text-white flex-1 mr-4">{item.q}</h3>
-                            </div>
-
-                            <div style={{
-                                maxHeight: open === i ? "300px" : "0",
-                                overflow: "hidden",
-                                transition: "max-height 0.35s ease"
-                            }}>
-                                <p className="px-6 pb-6 text-right leading-relaxed" style={{ color: "#94A3B8" }}>{item.a}</p>
-                            </div>
-                        </div>
-                    ))}
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
                 </div>
             </div>
+
         </section>
     );
 }

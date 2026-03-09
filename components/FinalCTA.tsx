@@ -8,7 +8,6 @@ import { Flame, TrendingUp, Zap, Calendar, Clock, User, ArrowRight, ArrowLeft } 
 import { useLanguage } from "./LanguageProvider";
 import { getDictionary } from "@/lib/i18n";
 
-
 export default function FinalCTA() {
   const { language, dir } = useLanguage();
   const dict = getDictionary(language);
@@ -20,20 +19,21 @@ export default function FinalCTA() {
 
   useGSAP(() => {
     if (prefersReducedMotion()) {
-      gsap.set([containerRef.current, contentRef.current?.children || [], deviceRef.current], { opacity: 1, y: 0, scale: 1 });
+      gsap.set([containerRef.current, contentRef.current?.children || [], deviceRef.current], { opacity: 1, x: 0, y: 0, scale: 1 });
       return;
     }
 
     let mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
+      // Container: slide in from left → right
       gsap.fromTo(
         containerRef.current,
-        { scale: 0.95, opacity: 0 },
+        { x: -60, opacity: 0 },
         {
-          scale: 1,
+          x: 0,
           opacity: 1,
-          duration: 0.8,
+          duration: 0.9,
           ease: "expo.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -42,6 +42,7 @@ export default function FinalCTA() {
         }
       );
 
+      // Text elements: staggered "generating" reveal
       const elements = contentRef.current?.querySelectorAll(".cta-element");
       if (elements) {
         gsap.fromTo(
@@ -50,7 +51,7 @@ export default function FinalCTA() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.6,
+            duration: 0.65,
             stagger: 0.1,
             ease: "power3.out",
             scrollTrigger: {
@@ -61,15 +62,15 @@ export default function FinalCTA() {
         );
       }
 
+      // Device mock: slide in from left → right
       gsap.fromTo(
         deviceRef.current,
-        { x: dir === "rtl" ? -50 : 50, opacity: 0, rotateY: dir === "rtl" ? 15 : -15, transformOrigin: dir === "rtl" ? "right center" : "left center" },
+        { x: -70, opacity: 0 },
         {
           x: 0,
           opacity: 1,
-          rotateY: 0,
-          duration: 0.8,
-          ease: "power3.out",
+          duration: 0.9,
+          ease: "expo.out",
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 60%",
@@ -79,7 +80,7 @@ export default function FinalCTA() {
     });
 
     mm.add("(max-width: 767px)", () => {
-      gsap.set([containerRef.current], { opacity: 1, y: 0, scale: 1 });
+      gsap.set([containerRef.current], { opacity: 1, x: 0, scale: 1 });
     });
 
     ScrollTrigger.refresh();
@@ -134,10 +135,11 @@ export default function FinalCTA() {
               })}
             </ul>
 
+            {/* Water-wave CTA button */}
             <div className="cta-element w-full md:w-auto">
               <button
                 onClick={() => window.open('https://wa.me/972552664456', '_blank')}
-                className={`flex items-center justify-center gap-3 w-full md:w-auto px-8 py-5 bg-orange-500 hover:bg-orange-400 text-black rounded-full text-lg font-bold transition-all shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:shadow-[0_0_40px_rgba(249,115,22,0.5)] hover:scale-105 active:scale-95 ${dir === "rtl" ? "flex-row-reverse" : ""}`}
+                className={`cta-wave-bg flex items-center justify-center gap-3 w-full md:w-auto px-8 py-5 text-black rounded-full text-lg font-bold shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:shadow-[0_0_45px_rgba(249,115,22,0.55)] hover:scale-105 active:scale-95 transition-shadow transition-transform duration-200 ${dir === "rtl" ? "flex-row-reverse" : ""}`}
               >
                 <span>{dict.finalCTA.cta}</span>
                 <ArrowIcon className="w-5 h-5" />
@@ -202,7 +204,11 @@ export default function FinalCTA() {
                   </div>
                 </div>
 
-                <div onClick={() => window.open('https://wa.me/972552664456', '_blank')} className="mt-4 h-14 w-full bg-orange-500 hover:bg-orange-400 rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.2)] flex items-center justify-center cursor-pointer transition-colors">
+                {/* Water-wave book button inside mock widget */}
+                <div
+                  onClick={() => window.open('https://wa.me/972552664456', '_blank')}
+                  className="wave-btn-inner mt-4 h-14 w-full rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.2)] flex items-center justify-center cursor-pointer"
+                >
                   <span className="text-black font-bold">{dict.finalCTA.cta}</span>
                 </div>
               </div>
