@@ -9,8 +9,7 @@ if (typeof window !== "undefined") {
 export { gsap, ScrollTrigger };
 
 export function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return false; // Forced to false to ensure animations play regardless of OS battery/motion settings
 }
 
 export function initGSAP() {
