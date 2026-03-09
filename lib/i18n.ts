@@ -277,29 +277,29 @@ export const dictionaries: Record<"he" | "en", DictItem> = {
                     type: "image",
                     src: "/assets/Untitled design (62).png",
                     name: "לקוח מרוצה",
-                    role: "בעל עסק",
-                    text: "ממליץ בחום."
+                    role: "בעלת עסק",
+                    text: "וואי אני בעננים! זה באמת הישג משמעותי בשבילי, תודה רבה זה באמת בזכותך."
                 },
                 {
                     type: "image",
                     src: "/assets/Untitled design (63).png",
                     name: "לקוח מרוצה",
                     role: "יזם",
-                    text: "תוצאות מעבר לציפיות."
+                    text: "פייי איזה סרטונים אש! תקשיבי כל סרטון אש... בום!"
                 },
                 {
                     type: "image",
                     src: "/assets/Untitled design (64).png",
                     name: "לקוח מרוצה",
                     role: "מנהל שיווק",
-                    text: "עבודה מקצועית ומדויקת."
+                    text: "מהמם. מעולה ממש וואו! באמת יצא מרשים ממש הסרטון. תודה אין כמוך."
                 },
                 {
                     type: "image",
                     src: "/assets/Untitled design (65).png",
                     name: "לקוח מרוצה",
                     role: "בעל מותג",
-                    text: "פשוט מעולה!"
+                    text: "תודה ענקית לעבודה המטורפת שלך!! היינו צריכים אחת כמוך שתעיף את העמוד שלנו באוויר, תודה יא מלכה!!"
                 }
             ]
         },
@@ -633,28 +633,28 @@ export const dictionaries: Record<"he" | "en", DictItem> = {
                     src: "/assets/Untitled design (62).png",
                     name: "Happy Client",
                     role: "Business Owner",
-                    text: "Highly recommended."
+                    text: "Wow, I'm over the moon! This is truly a significant achievement for me, thank you so much."
                 },
                 {
                     type: "image",
                     src: "/assets/Untitled design (63).png",
                     name: "Happy Client",
                     role: "Entrepreneur",
-                    text: "Results beyond expectations."
+                    text: "Phew, what fire videos! Listen, every video is fire... Boom!"
                 },
                 {
                     type: "image",
                     src: "/assets/Untitled design (64).png",
                     name: "Happy Client",
                     role: "Marketing Manager",
-                    text: "Professional and precise work."
+                    text: "Stunning. Truly excellent, wow! The video really came out very impressive. No one like you."
                 },
                 {
                     type: "image",
                     src: "/assets/Untitled design (65).png",
                     name: "Happy Client",
                     role: "Brand Owner",
-                    text: "Simply excellent!"
+                    text: "A huge thank you for your insane work!! We needed someone like you to blow up our page. You're a queen!!"
                 }
             ]
         },
