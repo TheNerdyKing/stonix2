@@ -381,3 +381,22 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ===== BRAND LOGO MARQUEE – CSS infinite loop ===== */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-33.3333%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 55s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}

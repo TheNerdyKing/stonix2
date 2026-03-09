@@ -24,7 +24,7 @@ export default function Hero() {
   const mainBlobRef = useRef<HTMLDivElement>(null);
   const pulsePillRef = useRef<HTMLDivElement>(null);
   const btnGroupRef = useRef<HTMLDivElement>(null);
-  const marqueeRef = useRef<HTMLDivElement>(null);
+
 
   useGSAP(() => {
     if (prefersReducedMotion()) {
@@ -91,20 +91,7 @@ export default function Hero() {
       repeat: -1,
     });
 
-    // ── Infinite Seamless Marquee for Brands
-    if (marqueeRef.current) {
-      const marqueeInner = marqueeRef.current.querySelector('.marquee-inner') as HTMLElement;
-      if (marqueeInner) {
-        const totalWidth = marqueeInner.offsetWidth / 2; // Divided by 2 because we clone the list
-
-        gsap.to(marqueeRef.current, {
-          x: dir === "rtl" ? totalWidth : -totalWidth,
-          duration: 60,
-          ease: "none",
-          repeat: -1,
-        });
-      }
-    }
+    // brands section uses pure CSS animation (animate-marquee), no GSAP needed
 
     ScrollTrigger.refresh();
   }, { scope: sectionRef, dependencies: [dir] });
@@ -228,10 +215,10 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Brands Slider Section - Uniform with Testimonials */}
-      <div className="relative z-10 border-t py-20 overflow-hidden" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-        <div className="max-w-7xl mx-auto px-6 mb-12">
-          <div className={`flex flex-col items-center gap-3`}>
+      {/* Brands Marquee – CSS infinite loop */}
+      <div className="relative z-10 border-t py-16" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+        <div className="max-w-7xl mx-auto px-6 mb-10">
+          <div className="flex flex-col items-center gap-3">
             <div className="h-[1px] w-12 bg-[#F97316] mb-2" />
             <span className="text-xs font-black uppercase tracking-[0.4em] text-white/50 text-center">
               {dict.hero.clientsLabel}
@@ -239,21 +226,33 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="relative overflow-hidden max-w-[100vw]">
-          <div ref={marqueeRef} className="flex whitespace-nowrap">
-            <div className="flex gap-6 marquee-inner">
-              {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((src, i) => (
-                <div key={i} className="flex-shrink-0 w-[180px] md:w-[240px]">
-                  <div className="aspect-[3/2] rounded-[2rem] bg-[#0E1118]/80 border border-white/5 flex items-center justify-center p-8 transition-all duration-500 hover:border-orange-500/30 hover:bg-[#0E1118] group/logo shadow-xl">
-                    <img
-                      src={src}
-                      alt="Partner Brand"
-                      className="max-h-full max-w-full object-contain transition-all duration-500 opacity-80 group-hover/logo:opacity-100"
-                    />
-                  </div>
+        {/* Fade edges */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            maskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)"
+          }}
+        >
+          <div className="flex w-max animate-marquee gap-6 py-4">
+            {[...CLIENT_LOGOS, ...CLIENT_LOGOS, ...CLIENT_LOGOS].map((src, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[200px] md:w-[260px]"
+              >
+                <div
+                  className="h-[130px] md:h-[160px] rounded-3xl flex items-center justify-center p-6 shadow-lg transition-transform duration-300 hover:scale-105"
+                  style={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.07)" }}
+                >
+                  <img
+                    src={src}
+                    alt="Partner Brand"
+                    className="max-h-full max-w-full object-contain"
+                    style={{ maxHeight: "90px" }}
+                  />
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
