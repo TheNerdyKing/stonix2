@@ -226,24 +226,40 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Brands row - Marquee */}
-      <div className="relative z-10 border-t py-12 overflow-hidden" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-        <div className="max-w-7xl mx-auto px-6 mb-6">
-          <span className="text-xs uppercase tracking-widest opacity-50 block text-center" style={{ color: "#94A3B8" }}>{dict.hero.clientsLabel}</span>
+      {/* Brands row - Optimized Marquee */}
+      <div className="relative z-10 border-t py-16 md:py-24 overflow-hidden"
+        style={{
+          borderColor: "rgba(255,255,255,0.06)",
+          maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)"
+        }}>
+
+        <div className="max-w-7xl mx-auto px-6 mb-12">
+          <div className={`flex flex-col items-center gap-3`}>
+            <div className="h-[1px] w-12 bg-[#F97316] mb-2" />
+            <span className="text-xs font-black uppercase tracking-[0.4em] text-white/50 text-center">
+              {dict.hero.clientsLabel}
+            </span>
+          </div>
         </div>
-        <div className="flex whitespace-nowrap" ref={marqueeRef}>
-          <div className="flex gap-16 items-center px-8">
+
+        <div className="flex whitespace-nowrap pointer-events-none select-none" ref={marqueeRef}>
+          <div className="flex gap-24 md:gap-36 items-center px-12">
             {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((src, i) => (
               <img
                 key={i}
                 src={src}
-                alt="Client Logo"
-                className="h-12 w-auto object-contain opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 transform"
+                alt="Partner Brand"
+                className="h-10 md:h-14 w-auto object-contain transition-all duration-500 opacity-60 hover:opacity-100"
+                style={{
+                  filter: "grayscale(1) brightness(0) invert(1) contrast(1.2)"
+                }}
               />
             ))}
           </div>
         </div>
       </div>
+
     </section>
   );
 }
